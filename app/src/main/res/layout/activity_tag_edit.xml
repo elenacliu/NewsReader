@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".TagEditActivity"
+        android:orientation="vertical">
+
+
+        <!--    &lt;!&ndash;Select entry chip: which has x&ndash;&gt;-->
+        <!--    &lt;!&ndash;Select choice chip: which has pressed effect&ndash;&gt;-->
+        <!--    <com.google.android.material.chip.Chip-->
+        <!--        style="@style/Widget.MaterialComponents.Chip.Choice"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="100dp"-->
+        <!--        android:text="Choice"/>-->
+        <!--    <com.google.android.material.chip.Chip-->
+        <!--        style="@style/Widget.MaterialComponents.Chip.Filter"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="100dp"-->
+        <!--        android:text="Filter"/>-->
+        <!--    <com.google.android.material.chip.Chip-->
+        <!--        style="@style/Widget.MaterialComponents.Chip.Entry"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="100dp"-->
+        <!--        android:text="Entry"/>-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:gravity="center_vertical"
+            android:text="添加频道"
+            android:textSize="@dimen/titleSize"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="25dp"/>
+        
+        <com.example.newsreader.DragGridLayout
+            android:id="@+id/add_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"/>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:textSize="@dimen/titleSize"
+            android:layout_gravity="center_vertical"
+            android:text="删除频道"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"/>
+
+        <com.example.newsreader.DragGridLayout
+            android:id="@+id/delete_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:text="确认修改"
+            android:layout_marginTop="30dp"
+            android:onClick="addItem"/>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
