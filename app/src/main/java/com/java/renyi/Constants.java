@@ -1,4 +1,4 @@
-package com.example.newsreader;
+package com.java.renyi;
 
 public class Constants {
     public static final int EDIT_TAG_REQUEST = 1;

@@ -1,4 +1,4 @@
-package com.example.newsreader;
+package com.java.renyi;
 
 import androidx.fragment.app.Fragment;
 

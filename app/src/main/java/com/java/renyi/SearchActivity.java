@@ -1,15 +1,11 @@
-package com.example.newsreader;
+package com.java.renyi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 public class SearchActivity extends AppCompatActivity {

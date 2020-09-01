@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.newsreader">
+    package="com.java.renyi">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchActivity">
+        <activity android:name="com.java.renyi.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -20,8 +20,8 @@
 <!--                android:name="android.app.default_searchable"-->
 <!--                android:value=".SearchActivity" />-->
         </activity>
-        <activity android:name=".TagEditActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.java.renyi.TagEditActivity" />
+        <activity android:name="com.java.renyi.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

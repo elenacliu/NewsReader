@@ -1,4 +1,4 @@
-package com.example.newsreader;
+package com.java.renyi;
 
 import android.content.Context;
 import android.os.Bundle;
