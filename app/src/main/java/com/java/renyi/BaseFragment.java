@@ -58,6 +58,7 @@ public abstract class BaseFragment extends Fragment {
         return rootView;
     }
 
+    // 当恢复fragment时需要调用此代码
     @Override
     public void onResume() {
         super.onResume();

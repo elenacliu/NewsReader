@@ -24,9 +24,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     private List<NewsEntity> newsEntityList;
     private LayoutInflater layoutInflater;
 
-    public NewsListAdapter(Context context, List<NewsEntity> newsEntityList) {
+    public NewsListAdapter(Context context) {
         this.context = context;
-        this.newsEntityList = newsEntityList;
         this.layoutInflater = LayoutInflater.from(this.context);
     }
 
@@ -51,14 +50,17 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             holder.time.setTextColor(context.getColor(R.color.news_item_isViewed));
             holder.source.setTextColor(context.getColor(R.color.news_item_isViewed));
         }
-
-
     }
 
     @Override
     public int getItemCount() {
-        // TODO: 会一次性把所有的entity都加载出来吗？会不会存在性能问题（下拉再加载?）
+        if (newsEntityList == null)
+            return 0;
         return newsEntityList.size();
+    }
+
+    public void setNewsEntityList(List<NewsEntity> newsEntityList) {
+        this.newsEntityList = newsEntityList;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

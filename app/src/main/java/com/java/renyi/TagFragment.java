@@ -2,6 +2,7 @@ package com.java.renyi;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,8 +22,9 @@ import butterknife.BindView;
 /**
  * 每个单独标签的新闻列表Fragment
  */
+
 public class TagFragment extends BaseFragment {
-    //    下拉刷新，上拉加载
+    // 下拉刷新，上拉加载
     @BindView(R.id.refresh_layout)
     RefreshLayout refreshLayout;
 
@@ -49,7 +51,8 @@ public class TagFragment extends BaseFragment {
         return R.layout.fragment_tag;
     }
 
-    // TODO: 从数据库中获取
+    // TODO: get op1，will it be called again when the fragment is showed again?
+    // No, it will only be called when created, but it is also ok.
     private void getNewsEntityList() {
         newsEntityList = new ArrayList<>();
         newsEntityList.add(
@@ -72,7 +75,9 @@ public class TagFragment extends BaseFragment {
         // 获取recylerView
         recyclerView = view.findViewById(R.id.recycler_view);
         // 创建adapter
-        newsListAdapter = new NewsListAdapter(getActivity(), newsEntityList);
+        newsListAdapter = new NewsListAdapter(getActivity());
+        // 先创建完adapter再设置（更改）newsEntityList
+        newsListAdapter.setNewsEntityList(newsEntityList);
         // recyclerView设置adapter
         recyclerView.setAdapter(newsListAdapter);
 
@@ -85,6 +90,7 @@ public class TagFragment extends BaseFragment {
                 System.out.println(news);
                 Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
                 intent.putExtra("news", news);
+                // TODO: startForActivity() and receive a "false"
                 startActivity(intent);
             }
         });
@@ -92,12 +98,22 @@ public class TagFragment extends BaseFragment {
 
         refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         refreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
+        // 注意每次实施onfresh判断一下网络连接状态
+        //  TODO: get op2, 下拉刷新，获取最新新闻
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
+                if (!NetworkUtil.isNetworkAvailable(getActivity())) {
+                    Toast.makeText(getActivity(), "offline",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getActivity(), "online", Toast.LENGTH_SHORT).show();
+                }
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
         });
+
+        // TODO: get op3，上拉加载，获取更多新闻
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {

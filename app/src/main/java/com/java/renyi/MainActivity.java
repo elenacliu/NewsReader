@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager_news_list);
         tabLayout = findViewById(R.id.tab_news_list);
         // 初始化drawer
-        // TODO: 用户头像和用户名需要从服务器得到
         AccountHeader accountHeader = new AccountHeaderBuilder()
                 .withActivity(this)
                 .addProfiles(
