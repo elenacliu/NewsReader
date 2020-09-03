@@ -5,9 +5,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.SearchRecentSuggestionsProvider;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.widget.Toast;
 
+// 参考：https://developer.android.google.cn/guide/topics/search/adding-recent-query-suggestions?hl=zh-cn#SavingQueries
 public class SearchActivity extends AppCompatActivity {
 
     private Toolbar toolbar;    // 自定义顶部
@@ -22,9 +25,11 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                    MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE);
+            suggestions.saveRecentQuery(query, null);
             doMySearch(query);
         }
-        // TODO: 添加历史搜索记录，以及清空
     }
 
     private void initView() {
@@ -39,8 +44,12 @@ public class SearchActivity extends AppCompatActivity {
         else {
             Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
         }
-        // TODO: search
+        // TODO: search things in sub thread
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // mAdapterNews.notifyDataSetChanged(); ?
+    }
 }

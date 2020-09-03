@@ -3,7 +3,7 @@
     <color name="colorPrimary">#0084ff</color>
     <color name="colorPrimaryDark">#0047ab</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="textColorPrimary">#fff</color>
+    <color name="textColorPrimary">#D3D3D3</color>
 
 
     <!-- OVERWRITE THESE COLORS FOR A LIGHT THEME -->

@@ -61,6 +61,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
 
     public void setNewsEntityList(List<NewsEntity> newsEntityList) {
         this.newsEntityList = newsEntityList;
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

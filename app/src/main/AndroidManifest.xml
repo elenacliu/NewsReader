@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
+
+        <!-- 声明内容提供程序 -->
+        <provider android:name=".MySuggestionProvider"
+            android:authorities="com.java.renyi" />
+
         <activity android:name=".NewsDetailActivity"></activity>
         <activity android:name=".SearchActivity">
             <intent-filter>

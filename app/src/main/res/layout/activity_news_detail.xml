@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/newsDetailMarginSize"
             android:layout_marginLeft="@dimen/newsDetailMarginSize"
+            android:layout_marginRight="@dimen/newsDetailMarginSize"
             android:textSize="@dimen/titleSize"
             android:text="新闻标题"/>
 
@@ -30,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/newsDetailMarginSize"
                 android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                android:layout_marginRight="@dimen/newsDetailMarginSize"
                 android:text="2020-09-02"
                 android:textSize="@dimen/subtextSize"
                 />
@@ -39,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/newsDetailMarginSize"
                 android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                android:layout_marginRight="@dimen/newsDetailMarginSize"
                 android:textSize="@dimen/subtextSize" />
 
         </LinearLayout>
@@ -53,6 +56,7 @@
                 android:text="这是新闻正文正文正文正文"
                 android:layout_marginTop="@dimen/newsDetailMarginSize"
                 android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                android:layout_marginRight="@dimen/newsDetailMarginSize"
                 android:textSize="@dimen/textSize" />
         </LinearLayout>
 
@@ -70,9 +74,7 @@
                 android:layout_marginLeft="@dimen/bottomMarginSize"
                 android:text="分享本页至："
                 android:layout_gravity="center_vertical"
-                android:textSize="@dimen/textSize"
-
-                />
+                android:textSize="@dimen/textSize" />
 
             <ImageButton
                 android:id="@+id/share_wechat"
@@ -93,9 +95,7 @@
                 android:background="#00000000"
                 android:onClick="onShareWeiboClick"
                 android:src="@drawable/ic_weibo"
-                android:contentDescription="weibo"
-
-                 />
+                android:contentDescription="weibo" />
 
         </LinearLayout>
 

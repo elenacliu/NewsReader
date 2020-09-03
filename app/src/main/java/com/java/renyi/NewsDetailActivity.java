@@ -17,13 +17,21 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXTextObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
 /**
  * 新闻详情页（新闻列表页直接过滤掉content == null 的新闻）
  * 由相关的fragment跳转至此时，需要携带url信息/若url == null，则需要携带time, source, content信息
  */
 // 参考：https://www.jianshu.com/p/4564be81a108
-
 public class NewsDetailActivity extends AppCompatActivity {
+
+    public static final String APP_ID = "wxf8948c9080cebb06";       // APP_ID PASS, but signature doesn't match
+    private IWXAPI api;
 
     private NewsEntity news;
     private TextView tvTitle, tvContent, tvTime, tvSource;
@@ -38,6 +46,8 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         System.out.println(news);
         initView();
+        api = WXAPIFactory.createWXAPI(this, APP_ID);
+        api.registerApp(APP_ID);
     }
 
     private void initView() {
@@ -117,7 +127,20 @@ public class NewsDetailActivity extends AppCompatActivity {
     }
 
     public void onShareWechatClick(View v) {
-        Toast.makeText(this, "分享至微信", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "分享至微信", Toast.LENGTH_SHORT).show();
+        WXMediaMessage msg = new WXMediaMessage();
+        WXTextObject wxTextObject = new WXTextObject();
+        wxTextObject.text = news.getContent();
+        msg.mediaObject = wxTextObject;
+        msg.title = news.getTitle();
+        msg.description = news.getContent().substring(0, 500);      // only 1024 characters
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.message = msg;
+        //transaction作为一个请求的唯一标识，必须进行赋值
+        req.transaction = "text";
+        req.scene = SendMessageToWX.Req.WXSceneSession;
+        api.sendReq(req);
     }
 
     public void onShareWeiboClick(View v) {
