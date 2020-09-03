@@ -2,31 +2,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.java.renyi">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.java.renyi.SearchActivity">
+        <activity android:name=".NewsDetailActivity"></activity>
+        <activity android:name=".SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <!--在要显示SearchView的activity中声明该元素-->
-            <meta-data android:name="android.app.searchable"
+            <!-- 在要显示SearchView的activity中声明该元素 -->
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-<!--            <meta-data-->
-<!--                android:name="android.app.default_searchable"-->
-<!--                android:value=".SearchActivity" />-->
+            <!-- <meta-data -->
+            <!-- android:name="android.app.default_searchable" -->
+            <!-- android:value=".SearchActivity" /> -->
         </activity>
-        <activity android:name="com.java.renyi.TagEditActivity" />
-        <activity android:name="com.java.renyi.MainActivity">
+        <activity android:name=".TagEditActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchActivity" />

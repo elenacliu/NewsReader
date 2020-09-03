@@ -52,7 +52,7 @@ public abstract class BaseFragment extends Fragment {
         if(rootView == null)  {
             rootView = inflater.inflate(inflateLayoutId(), container, false);
             unbinder = ButterKnife.bind(this, rootView);
-            initView();
+            initView(rootView);
         }
         Log.e("onCreateView", "onCreateView");
         return rootView;
@@ -72,7 +72,7 @@ public abstract class BaseFragment extends Fragment {
             unbinder.unbind();
     }
 
-    protected void initView() {
+    protected void initView(View rootView) {
 
     }
     protected void prepare() {
