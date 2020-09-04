@@ -12,7 +12,9 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -36,6 +38,8 @@ import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import static androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode;
 
@@ -52,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
     // TODO: 该数据得存入SharePreferences中
     private ArrayList<String> tags = new ArrayList<>();
     private ArrayList<String> delTags = new ArrayList<>();
-    private ArrayList<Fragment> fragments = new ArrayList<>();
+//    HashMap<String, TagFragment> hashMap = new HashMap<>();
+    private ArrayList<TagFragment> fragments = new ArrayList<>();
     // 适配器
     private HomePagerAdapter homePagerAdapter;
     private ImageButton imageButton;
@@ -100,12 +105,19 @@ public class MainActivity extends AppCompatActivity {
                 assert data != null;
                 tags = (ArrayList<String>) data.getSerializableExtra("tags");
                 delTags = (ArrayList<String>) data.getSerializableExtra("delTags");
-                // 一定要清空吗？
+
                 fragments.clear();
                 for(String s: tags) {
                     fragments.add(TagFragment.newInstance(s));
                 }
-                homePagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), tags, fragments);
+
+//              每次newInstance似乎也没起到任何作用，只是限制了fragment的个数，所以应该还是起作用了，但是为什么前几个的顺序没变？
+                System.out.println("----------");
+                Log.e("tags", tags.toString());
+                Log.e("fragments", fragments.toString());
+                System.out.println("----------");
+                homePagerAdapter.setTagList(tags);
+                homePagerAdapter.setFragmentList(fragments);
                 viewPager.setAdapter(homePagerAdapter);
                 tabLayout.setupWithViewPager(viewPager);
             }
@@ -231,6 +243,10 @@ public class MainActivity extends AppCompatActivity {
         for(String s: tags) {
             fragments.add(TagFragment.newInstance(s));
         }
+//        // 将唯一实例存储进hashmap中
+//        for (TagFragment fragment: fragments) {
+//            hashMap.put(fragment.currentTag, fragment);
+//        }
         // 这三行一行都不能省略
         homePagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), tags, fragments);
         viewPager.setAdapter(homePagerAdapter);
@@ -271,4 +287,5 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
 }

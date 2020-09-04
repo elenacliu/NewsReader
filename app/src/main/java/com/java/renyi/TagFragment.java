@@ -51,7 +51,7 @@ public class TagFragment extends BaseFragment {
         this.currentTag = currentTag;
     }
 
-    public static Fragment newInstance(String currentTag) {
+    public static TagFragment newInstance(String currentTag) {
         return new TagFragment(currentTag);
     }
 
@@ -96,7 +96,7 @@ public class TagFragment extends BaseFragment {
         if (currentTag.equals("paper")) {
             final Observer<List<Entry>> nowPaperEntryObserver = entries -> {
                 Log.e("onChanged", entries.size()+"");
-                // TODO: Print entries
+                // TODO: Print entries, when content is null
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
@@ -133,7 +133,6 @@ public class TagFragment extends BaseFragment {
                 System.out.println("------------------------");
                 Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
                 intent.putExtra("news", news);
-//                System.out.println(news);
                 // 直接把值传进MainActivity ?
                 startActivityForResult(intent, Constants.UPDATE_REQUEST);
             }
@@ -187,5 +186,23 @@ public class TagFragment extends BaseFragment {
                 mEntryViewModel.setViewed(data.getStringExtra("id"), currentTag);
             }
         }
+    }
+
+
+    public void onResume() {
+        super.onResume();
+        Log.e("onResume", currentTag +" onResume");
+    }
+
+    @Override
+    public String toString() {
+        return "TagFragment{" +
+                "refreshLayout=" + refreshLayout +
+                ", currentTag='" + currentTag + '\'' +
+                ", recyclerView=" + recyclerView +
+                ", newsListAdapter=" + newsListAdapter +
+                ", newsEntityList=" + newsEntityList +
+                ", mEntryViewModel=" + mEntryViewModel +
+                '}';
     }
 }

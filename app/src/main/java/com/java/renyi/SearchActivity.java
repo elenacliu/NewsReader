@@ -37,7 +37,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
+        initView();
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -47,14 +47,7 @@ public class SearchActivity extends AppCompatActivity {
             suggestions.saveRecentQuery(query, null);
             doMySearch(query);
         }
-        initView();
-    }
 
-    private void initNews() {
-        newsEntityList = new ArrayList<>();
-        newsEntityList.add(new Entry("000"));
-        newsEntityList.add(new Entry("111"));
-        newsEntityList.add(new Entry("222"));
     }
 
     private void initView() {
@@ -62,7 +55,7 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // 获取recyclerview
         recyclerView = findViewById(R.id.recycler_view_search);
-        initNews();
+//        initNews();
         // 创建adapter
         newsListAdapter = new NewsListAdapter(SearchActivity.this);
         newsListAdapter.setNewsEntityList(newsEntityList);
@@ -70,16 +63,16 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(newsListAdapter);
         // 设置layoutManager
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//        mEntryViewModel = new ViewModelProvider(this).get(EntryViewModel.class);
+        mEntryViewModel = new ViewModelProvider(this).get(EntryViewModel.class);
 
-//        final Observer<List<Entry>> nowSearchObserver = entries -> {
-//            newsListAdapter.setNewsEntityList(entries);
-//            Log.e("searchResultLength", entries.size()+"");
-//            if (entries.size() > 0)
-//                Log.e("searchResult[0]", entries.get(0).toString());
-//        };
-//
-//        mEntryViewModel.getSearchResult().observe(this, nowSearchObserver);
+        final Observer<List<Entry>> nowSearchObserver = entries -> {
+            newsListAdapter.setNewsEntityList(entries);
+            Log.e("searchResultLength", entries.size()+"");
+            if (entries.size() > 0)
+                Log.e("searchResult[0]", entries.get(0).toString());
+        };
+
+        mEntryViewModel.getSearchResult().observe(this, nowSearchObserver);
 
         // 监听点击事件
         newsListAdapter.setOnItemClickListener(new NewsListAdapter.OnItemClickListener() {
@@ -100,7 +93,7 @@ public class SearchActivity extends AppCompatActivity {
         }
         else {
             Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
-//            mEntryViewModel.search(query);
+            mEntryViewModel.search(query);
         }
     }
 
