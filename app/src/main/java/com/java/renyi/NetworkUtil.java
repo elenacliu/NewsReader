@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
  * 辅助类
  * 检查网络情况
  */
+
 public class NetworkUtil {
     /**
      * 检查网络是否可用
@@ -20,6 +21,7 @@ public class NetworkUtil {
         if (manager == null) {
             return false;
         }
+
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
 
         if (networkInfo == null || !networkInfo.isAvailable()) {

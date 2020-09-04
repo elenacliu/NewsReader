@@ -18,8 +18,7 @@
             android:layout_marginTop="@dimen/newsDetailMarginSize"
             android:layout_marginLeft="@dimen/newsDetailMarginSize"
             android:layout_marginRight="@dimen/newsDetailMarginSize"
-            android:textSize="@dimen/titleSize"
-            android:text="新闻标题"/>
+            android:textSize="@dimen/titleSize" />
 
 
         <LinearLayout
@@ -32,7 +31,6 @@
                 android:layout_marginTop="@dimen/newsDetailMarginSize"
                 android:layout_marginLeft="@dimen/newsDetailMarginSize"
                 android:layout_marginRight="@dimen/newsDetailMarginSize"
-                android:text="2020-09-02"
                 android:textSize="@dimen/subtextSize"
                 />
             <TextView
@@ -53,7 +51,6 @@
                 android:id="@+id/news_detail_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="这是新闻正文正文正文正文"
                 android:layout_marginTop="@dimen/newsDetailMarginSize"
                 android:layout_marginLeft="@dimen/newsDetailMarginSize"
                 android:layout_marginRight="@dimen/newsDetailMarginSize"

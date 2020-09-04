@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.java.renyi.db.Entry;
+
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder> {
     private Context context;
-    private List<NewsEntity> newsEntityList;
+    private List<Entry> newsEntityList;
     private LayoutInflater layoutInflater;
 
     public NewsListAdapter(Context context) {
@@ -37,14 +39,14 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        NewsEntity news = newsEntityList.get(position);
+        Entry news = newsEntityList.get(position);
 
-        holder.title.setText(news.getTitle());
-        holder.content.setText(news.getContent());
-        holder.time.setText(news.getTime());
-        holder.source.setText(news.getSource());
+        holder.title.setText(news.title);
+        holder.content.setText(news.content);
+        holder.time.setText(news.time);
+        holder.source.setText(news.source);
         // 如果该新闻被看过
-        if (news.isViewed()) {
+        if (news.viewed) {
             holder.title.setTextColor(context.getColor(R.color.news_item_isViewed));
             holder.content.setTextColor(context.getColor(R.color.news_item_isViewed));
             holder.time.setTextColor(context.getColor(R.color.news_item_isViewed));
@@ -59,7 +61,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
         return newsEntityList.size();
     }
 
-    public void setNewsEntityList(List<NewsEntity> newsEntityList) {
+    public void setNewsEntityList(List<Entry> newsEntityList) {
         this.newsEntityList = newsEntityList;
         notifyDataSetChanged();
     }
@@ -79,7 +81,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             time = itemView.findViewById(R.id.news_list_time);
             source = itemView.findViewById(R.id.news_list_source);
 
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -97,8 +98,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
      * 设置item的监听事件的接口
      */
     public interface OnItemClickListener {
-        // 直接传递的是一个NewsEntity实体，是否需要传递position?
-        void OnItemClick(View view, NewsEntity news);
+        void OnItemClick(View view, Entry news);
     }
 
     private OnItemClickListener onItemClickListener;

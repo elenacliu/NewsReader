@@ -25,7 +25,6 @@
             android:paddingTop="@dimen/newsListMarginSize"
             android:ellipsize="end"
             android:maxEms="200"
-            android:text="新闻标题"
             android:textColor="@color/news_item_nViewed"
             android:textSize="@dimen/newsListTitleSize" />
 
@@ -40,7 +39,6 @@
                 android:layout_marginTop="@dimen/newsListMarginSize"
                 android:ellipsize="end"
                 android:maxLines="5"
-                android:text="这里是新闻正文新闻正文新闻正文"
                 android:textColor="@color/news_item_nViewed"
                 android:textSize="@dimen/newsListContentSize" />
         </LinearLayout>
@@ -57,7 +55,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/newsListMarginSize"
                 android:layout_marginTop="@dimen/newsListMarginSize"
-                android:text="2020-09-02"
                 android:textColor="@color/news_item_nViewed"
                 android:textSize="@dimen/newsListTimeSize" />
 
@@ -67,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="@dimen/newsListMarginSize"
-                android:text="搜狐新闻"
                 android:textColor="@color/news_item_nViewed"
                 android:textSize="@dimen/newsListTimeSize" />
         </LinearLayout>

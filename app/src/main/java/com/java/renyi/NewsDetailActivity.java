@@ -2,6 +2,7 @@ package com.java.renyi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
@@ -17,6 +18,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.java.renyi.db.Entry;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXTextObject;
@@ -33,7 +35,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     public static final String APP_ID = "wxf8948c9080cebb06";       // APP_ID PASS, but signature doesn't match
     private IWXAPI api;
 
-    private NewsEntity news;
+    private Entry news;
     private TextView tvTitle, tvContent, tvTime, tvSource;
 
     @Override
@@ -42,9 +44,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_detail);
 
         Intent intent = getIntent();
-        news = (NewsEntity) intent.getSerializableExtra("news");
+        news = (Entry) intent.getSerializableExtra("news");
 
-        System.out.println(news);
         initView();
         api = WXAPIFactory.createWXAPI(this, APP_ID);
         api.registerApp(APP_ID);
@@ -53,19 +54,25 @@ public class NewsDetailActivity extends AppCompatActivity {
     private void initView() {
         tvTitle = findViewById(R.id.news_detail_title);
         tvTime = findViewById(R.id.news_detail_time);
-        tvSource = findViewById(R.id.news_list_source);
+        tvSource = findViewById(R.id.news_detail_source);
         tvContent = findViewById(R.id.news_detail_content);
 
-        tvTitle.setText(news.getTitle());
-        tvTime.setText(news.getTime());
-        if (news.getSource() != null) {
-            tvSource.setText(news.getSource());
+        if (news.title != null) {
+            tvTitle.setText(news.title);
         }
-//        else {
-//            tvSource.setText("");
-//        }
-
-        tvContent.setText(news.getContent());
+        if (news.time != null) {
+            tvTime.setText(news.time);
+        }
+        if (news.source != null) {
+            System.out.println(news.source);
+            tvSource.setText(news.source);
+        }
+        if (news.content != null) {
+            tvContent.setText(news.content);
+        }
+        Intent intent = getIntent();
+        intent.putExtra("id", news.get_id());
+        setResult(Activity.RESULT_OK, intent);
 //        // 构造WebView
 //        webView = new WebView(this);
 //        setContentView(webView);
@@ -121,19 +128,16 @@ public class NewsDetailActivity extends AppCompatActivity {
 //            }
 //        });
 //        WebView.setWebContentsDebuggingEnabled(true);
-
-
-
     }
 
     public void onShareWechatClick(View v) {
 //        Toast.makeText(this, "分享至微信", Toast.LENGTH_SHORT).show();
         WXMediaMessage msg = new WXMediaMessage();
         WXTextObject wxTextObject = new WXTextObject();
-        wxTextObject.text = news.getContent();
+        wxTextObject.text = news.content;
         msg.mediaObject = wxTextObject;
-        msg.title = news.getTitle();
-        msg.description = news.getContent().substring(0, 500);      // only 1024 characters
+        msg.title = news.title;
+        msg.description = news.content.substring(0, 500);      // only 1024 characters
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.message = msg;
