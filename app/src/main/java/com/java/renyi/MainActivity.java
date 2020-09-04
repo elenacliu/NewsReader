@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         PrimaryDrawerItem itemGraphView = new PrimaryDrawerItem().withName("疫情图谱").withIcon(GoogleMaterial.Icon.gmd_bubble_chart).withIdentifier(Constants.GRAPHVIEW_IDENTIFIER);
         PrimaryDrawerItem itemCluster = new PrimaryDrawerItem().withName("新闻聚类").withIcon(GoogleMaterial.Icon.gmd_grain).withIdentifier(Constants.CLUSTER_IDENTIFIER);
         PrimaryDrawerItem itemScholar = new PrimaryDrawerItem().withName("知疫学者").withIcon(GoogleMaterial.Icon.gmd_people).withIdentifier(Constants.SCHOLAR_IDENTIFIER);
-        PrimaryDrawerItem itemDebugSearch = new PrimaryDrawerItem().withName("搜    索").withIdentifier(Constants.SEARCH_IDENTIFIER);
+//        PrimaryDrawerItem itemDebugSearch = new PrimaryDrawerItem().withName("搜    索").withIdentifier(Constants.SEARCH_IDENTIFIER);
 
 
         drawer = new DrawerBuilder().withActivity(this)
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 itemGraphView,
                 itemCluster,
                 itemScholar,
-                itemDebugSearch,
+//                itemDebugSearch,
 //        new PrimaryDrawerItem().withName("我的收藏").withIcon(GoogleMaterial.Icon.gmd_favorite).withIdentifier(Constants.FAVORITE_IDENTIFIER),
 //        new PrimaryDrawerItem().withName("设置屏蔽").withIcon(GoogleMaterial.Icon.gmd_visibility_off).withIdentifier(Constants.SHIELD_IDENTIFIER),
 //        new PrimaryDrawerItem().withName("发布新闻").withIcon(GoogleMaterial.Icon.gmd_send).withIdentifier(Constants.RELEASE_IDENTIFIER),

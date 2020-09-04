@@ -20,4 +20,5 @@
     <color name="material_drawer_header_selection_text">#FFF</color>
 
     <color name="news_item_isViewed">#42000000</color>
+    <color name="smart_refresh_bg">#42000000</color>
 </resources>

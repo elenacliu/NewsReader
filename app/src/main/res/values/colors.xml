@@ -25,4 +25,6 @@
     <color name="card_view_bg">#FF86ccfc</color>
     <color name="transparent">#00000000</color>
 
+    <color name="smart_refresh_bg">#ffffff</color>
+
 </resources>
