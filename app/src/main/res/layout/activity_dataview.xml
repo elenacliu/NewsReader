@@ -36,7 +36,7 @@
                         android:id="@+id/tv_dataview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="确诊国家Top10"
+                        android:text="确诊国家Top5"
                         android:textSize="@dimen/titleSize"
                         android:layout_marginLeft="@dimen/marginSize"
                         android:textStyle="bold" />
@@ -45,7 +45,7 @@
                 <com.github.mikephil.charting.charts.BarChart
                     android:id="@+id/chart_international"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/barchartHeight"/>
+                    android:layout_height="@dimen/barchartHeight" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

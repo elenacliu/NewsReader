@@ -1,6 +1,8 @@
 package com.java.renyi;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -31,6 +34,7 @@ import com.java.renyi.db.PandemicStatus;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,14 +47,23 @@ public class DataviewActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private DataviewAdapter dataviewAdapter;
     EntryViewModel mEntryViewModel;
+    private Toolbar toolbar;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dataview);
 
+        initToolbar();
         initChart();
         initView();
+    }
+
+    private void initToolbar() {
+        toolbar = findViewById(R.id.toolbar_dataview);
+        toolbar.setTitle("疫情数据");
+        setSupportActionBar(toolbar);
     }
 
     /**
@@ -77,56 +90,14 @@ public class DataviewActivity extends AppCompatActivity {
         mEntryViewModel.askDomesticStatus();
     }
 
-    private void getDataCivilY() {
-//        internationalConfirmed = new ArrayList<>();
-//        internationalCured = new ArrayList<>();
-//        internationalDead = new ArrayList<>();
-//
-//        internationalConfirmed.add(new BarEntry(935, 0));
-//        internationalCured.add(new BarEntry(926, 0));
-//        internationalDead.add(new BarEntry(6, 0));
-//
-//        internationalConfirmed.add(new BarEntry(355, 1));
-//        internationalCured.add(new BarEntry(323, 1));
-//        internationalDead.add(new BarEntry(11, 1));
-//
-//        internationalConfirmed.add(new BarEntry(150, 2));
-//        internationalCured.add(new BarEntry(122, 2));
-//        internationalDead.add(new BarEntry(15, 2));
-//
-//        internationalConfirmed.add(new BarEntry(230, 3));
-//        internationalCured.add(new BarEntry(228, 3));
-//        internationalDead.add(new BarEntry(2, 3));
-//
-//
-//        internationalConfirmed.add(new BarEntry(68139, 4));
-//        internationalCured.add(new BarEntry(63627, 4));
-//        internationalDead.add(new BarEntry(4512, 4));
-//
-//
-//        internationalConfirmed.add(new BarEntry(1019, 5));
-//        internationalCured.add(new BarEntry(1015, 5));
-//        internationalDead.add(new BarEntry(4, 5));
-//
-//        internationalConfirmed.add(new BarEntry(4850, 6));
-//        internationalCured.add(new BarEntry(4456, 6));
-//        internationalDead.add(new BarEntry(94, 6));
-//
-//        internationalConfirmed.add(new BarEntry(46, 7));
-//        internationalCured.add(new BarEntry(46, 7));
-//        internationalDead.add(new BarEntry(0, 7));
-//
-//        internationalConfirmed.add(new BarEntry(490, 8));
-//        internationalCured.add(new BarEntry(471, 8));
-//        internationalDead.add(new BarEntry(7, 8));
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void initChart() {
         barChart = findViewById(R.id.chart_international);
 
         XAxis xAxis = barChart.getXAxis();
         // XAxis位置默认在上方
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
 
         YAxis left = barChart.getAxisLeft();
         left.setDrawLabels(false); // 不设置坐标轴数据标签
@@ -134,18 +105,8 @@ public class DataviewActivity extends AppCompatActivity {
         left.setDrawGridLines(false); // 不绘制网格线
         left.setDrawZeroLine(true); // 绘制零线
         barChart.getAxisRight().setEnabled(false); // 不绘制右边Y轴
-
-//        BarDataSet civilConfirmedSet = new BarDataSet(internationalConfirmed, "确诊人数");
-//        BarDataSet civilCuredSet = new BarDataSet(internationalCured, "治愈人数");
-//        BarDataSet civilDeadSet = new BarDataSet(internationalDead, "死亡人数");
-
-
-//        dataSets.add(civilConfirmedSet);
-//        dataSets.add(civilCuredSet);
-//        dataSets.add(civilDeadSet);
-//        BarData barData = new BarData(internationalX, dataSets);     // 多条曲线
-//        barChart.setData(barData);
         barChart.animateY(2000);
+        barChart.setDescription("");
 
         mEntryViewModel = new ViewModelProvider(this).get(EntryViewModel.class);
 
@@ -157,10 +118,10 @@ public class DataviewActivity extends AppCompatActivity {
         };
         mEntryViewModel.getGlobalStatus().observe(this, nowGlobalObserver);
         mEntryViewModel.askGlobalStatus();
-
     }
 
     // 由返回的entries生成图表需要的BarData
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private BarData generateData(List<PandemicStatus> entries) {
 
         Collections.sort(entries, new Comparator<PandemicStatus>() {
@@ -169,12 +130,10 @@ public class DataviewActivity extends AppCompatActivity {
                 return t1.status[0].compareTo(t0.status[0]);
             }
         });
-
-
-        List<PandemicStatus> newEntries = entries.subList(1,11);
+        List<PandemicStatus> newEntries = entries.subList(1,6);
 
         System.out.println("----------");
-        Log.e("newEntries", entries.toString());
+        Log.e("newEntries", newEntries.toString());
         System.out.println("----------");
 
         internationalX = new ArrayList<>();
@@ -182,9 +141,16 @@ public class DataviewActivity extends AppCompatActivity {
         internationalCured = new ArrayList<>();
         internationalDead = new ArrayList<>();
 
+        HashMap<String, String> trans = new HashMap<>();
+        trans.put("United States of America", "美国");
+        trans.put("Brazil", "巴西");
+        trans.put("India","印度");
+        trans.put("Russia","俄罗斯");
+        trans.put("Peru", "秘鲁");
+
         int cnt = 0;
         for (PandemicStatus entry: newEntries) {
-            internationalX.add(entry.region);
+            internationalX.add(trans.getOrDefault(entry.region, entry.region));
             Integer[] status = entry.status;
             int confirmed, cured, dead;
             if (status[0] == null) {
@@ -210,9 +176,9 @@ public class DataviewActivity extends AppCompatActivity {
 //        confirmedSet.setColors(Collections.singletonList(ContextCompat.getColor(this, R.color.datatext_confirmed)));
 //        curedSet.setColors(Collections.singletonList(ContextCompat.getColor(this, R.color.datatext_cured)));
 //        deadSet.setColors(Collections.singletonList(ContextCompat.getColor(this, R.color.datatext_dead)));
-        confirmedSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        curedSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        deadSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        confirmedSet.setColor(Color.rgb(48,88,140));
+        curedSet.setColor(Color.rgb(119,195,242));
+        deadSet.setColor(Color.rgb(58,117,140));
         List<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(confirmedSet);
         dataSets.add(curedSet);
