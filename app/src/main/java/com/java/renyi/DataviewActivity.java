@@ -30,6 +30,7 @@ import com.java.renyi.db.PandemicStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -151,7 +152,6 @@ public class DataviewActivity extends AppCompatActivity {
         final Observer<List<PandemicStatus>> nowGlobalObserver = entries -> {
             Log.e("onChanged", entries.size()+"");
             barChart.setData(generateData(entries));
-            // TODO：这两句的位置是否正确？
             barChart.notifyDataSetChanged();
             barChart.invalidate();
         };
@@ -162,14 +162,28 @@ public class DataviewActivity extends AppCompatActivity {
 
     // 由返回的entries生成图表需要的BarData
     private BarData generateData(List<PandemicStatus> entries) {
+
+        Collections.sort(entries, new Comparator<PandemicStatus>() {
+            @Override
+            public int compare(PandemicStatus t0, PandemicStatus t1) {
+                return t1.status[0].compareTo(t0.status[0]);
+            }
+        });
+
+
+        List<PandemicStatus> newEntries = entries.subList(1,11);
+
+        System.out.println("----------");
+        Log.e("newEntries", entries.toString());
+        System.out.println("----------");
+
         internationalX = new ArrayList<>();
         internationalConfirmed = new ArrayList<>();
-//        internationalSuspected = new ArrayList<>();
         internationalCured = new ArrayList<>();
         internationalDead = new ArrayList<>();
 
         int cnt = 0;
-        for (PandemicStatus entry: entries) {
+        for (PandemicStatus entry: newEntries) {
             internationalX.add(entry.region);
             Integer[] status = entry.status;
             int confirmed, cured, dead;
@@ -193,9 +207,12 @@ public class DataviewActivity extends AppCompatActivity {
         BarDataSet confirmedSet = new BarDataSet(internationalConfirmed, "确诊人数");
         BarDataSet curedSet = new BarDataSet(internationalCured, "治愈人数");
         BarDataSet deadSet = new BarDataSet(internationalDead, "死亡人数");
-        confirmedSet.setColors(Collections.singletonList(ContextCompat.getColor(this, R.color.datatext_confirmed)));
-        curedSet.setColors(Collections.singletonList(ContextCompat.getColor(this, R.color.datatext_cured)));
-        deadSet.setColors(Collections.singletonList(ContextCompat.getColor(this, R.color.datatext_dead)));
+//        confirmedSet.setColors(Collections.singletonList(ContextCompat.getColor(this, R.color.datatext_confirmed)));
+//        curedSet.setColors(Collections.singletonList(ContextCompat.getColor(this, R.color.datatext_cured)));
+//        deadSet.setColors(Collections.singletonList(ContextCompat.getColor(this, R.color.datatext_dead)));
+        confirmedSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        curedSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        deadSet.setColors(ColorTemplate.COLORFUL_COLORS);
         List<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(confirmedSet);
         dataSets.add(curedSet);

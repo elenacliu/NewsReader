@@ -36,7 +36,7 @@
                         android:id="@+id/tv_dataview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="境外疫情数据"
+                        android:text="确诊国家Top10"
                         android:textSize="@dimen/titleSize"
                         android:layout_marginLeft="@dimen/marginSize"
                         android:textStyle="bold" />
