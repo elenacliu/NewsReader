@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.java.renyi.SearchActivity;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -31,14 +34,26 @@ public class Entry implements Serializable {
         if ("news".equals(type)) {
             source = json.getString("source");
         } else if ("paper".equals(type)) {
-            source = json.getString("authors");
+            source = processAuthor(json.getString("authors"));
         }
-        // TODO : which date should be selected, json.getDate()?
         time = proccessDate(json.getString("date"));
         this.type = json.getString("type");
+
         viewed = false;
         category = json.getString("category");
         urls = json.getString("urls");
+    }
+
+    private String processAuthor(String jsonString) {
+        JSONArray jarr = JSON.parseArray(jsonString);
+        StringBuilder authors = new StringBuilder("");
+        int length = jarr.size();
+        for (int i = 0; i < length; i++) {
+            if (i != 0)
+                authors.append(" ,");
+            authors.append(((JSONObject)(jarr.get(i))).getString("name"));
+        }
+        return authors.toString();
     }
 
     private String proccessDate(String date) {
@@ -89,8 +104,12 @@ public class Entry implements Serializable {
 //                    + " \ntime:" + time + " \nviewed:" + viewed + " \n category:" + category + "\nurls:" + urls;
 //        String ret = "type:"+type + " \ntitle:" + title + " \ntime:" + time;
 //        String ret = "type:"+type + " \ntitle:" + title + " \ntime:" + time + "\nviewed:"+ viewed;
-        String ret = "+id:"+_id+"\ntype:"+type + " \ntitle:" + title + " \ntime:" + time + "\nviewed:"+ viewed;
-
+//        String ret = "+id:"+_id+"\ntype:"+type + " \ntitle:" + title
+////                + "\ncontent:" + content
+//                + " \ntime:" + time
+//                + "\nviewed:"+ viewed;
+////                + "\nsource:" + source;
+        String ret = "id:" + _id + "\ntitle:" + title + "\ntime:"+time;
         return ret;
     }
 }

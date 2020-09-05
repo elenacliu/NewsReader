@@ -2,6 +2,9 @@
 <resources>
     <dimen name="marginSize">16dp</dimen>
     <dimen name="textSize">16sp</dimen>
+
+    <dimen name="dataTextSize">16sp</dimen>
+    <dimen name="dataRegionSize">14sp</dimen>
     <dimen name="subtextSize">12sp</dimen>
     <dimen name="titleSize">28sp</dimen>
     <dimen name="avatarSize">80dp</dimen>
@@ -15,4 +18,8 @@
     <dimen name="newsTitleMarginSize">10dp</dimen>
     <dimen name="newsDetailMarginSize">18dp</dimen>
     <dimen name="bottomMarginSize">40dp</dimen>
+    <dimen name="barchartHeight">350dp</dimen>
+
+    <dimen name="dataviewHeight">30dp</dimen>
+    <dimen name="dataviewPadding">4dp</dimen>
 </resources>

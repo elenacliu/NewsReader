@@ -27,4 +27,15 @@
 
     <color name="smart_refresh_bg">#ffffff</color>
 
+    <color name="dataview_region">#338B6969</color>
+    <color name="datatext_region">#8B6969</color>
+    <color name="dataview_confirmed">#33FF4500</color>
+    <color name="datatext_confirmed">#FF4500</color>
+    <color name="dataview_suspected">#339400D3</color>
+    <color name="datatext_suspected">#9400D3</color>
+    <color name="dataview_cured">#3332CD32</color>
+    <color name="datatext_cured">#32CD32</color>
+    <color name="dataview_dead">#334169E1</color>
+    <color name="datatext_dead">#4169E1</color>
+
 </resources>
