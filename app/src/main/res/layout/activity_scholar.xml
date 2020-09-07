@@ -13,14 +13,11 @@
 
 <!--    两个标签占满所有 -->
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_scholar"
-        android:layout_width="0dp"
+        android:id="@+id/tab_layout_scholar"
+        android:layout_width="match_parent"
         android:layout_height="52dp"
         app:tabMode="scrollable"
-        app:tabTextAppearance="@style/TabStyle"
-        app:layout_constraintBottom_toBottomOf="@+id/tag_setting_button"
-        app:layout_constraintEnd_toStartOf="@+id/tag_setting_button"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:tabTextAppearance="@style/TabStyle" />
 
 
     <FrameLayout

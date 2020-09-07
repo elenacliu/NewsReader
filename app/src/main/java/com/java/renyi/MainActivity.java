@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                     fragments.add(TagFragment.newInstance(s));
                 }
 
-//              每次newInstance似乎也没起到任何作用，只是限制了fragment的个数，所以应该还是起作用了，但是为什么前几个的顺序没变？
                 System.out.println("----------");
                 Log.e("tags", tags.toString());
                 Log.e("fragments", fragments.toString());
@@ -205,7 +204,6 @@ public class MainActivity extends AppCompatActivity {
                         long identifier = drawerItem.getIdentifier();
                         if (identifier == Constants.CLEAR_IDENTIFIER) {
                             Toast.makeText(MainActivity.this, "清除缓存！", Toast.LENGTH_SHORT).show();
-                            // TODO: 清除缓存
                         }
                         else if (identifier == Constants.DATAVIEW_IDENTIFIER) {
                             Intent intent = new Intent(MainActivity.this, DataviewActivity.class);

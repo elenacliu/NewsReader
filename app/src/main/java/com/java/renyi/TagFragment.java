@@ -112,19 +112,18 @@ public class TagFragment extends BaseFragment {
                 Log.e("domesticCluster ", entries.size()+"");
             });
             mEntryViewModel.getEconomyCluster().observe(this, entries -> {
-//                Iterator<Entry> iterator = entries.iterator();
-//                while (iterator.hasNext()) {
-//                    Entry entry = iterator.next();
-//                    if (entry.content == null) {
-//                        iterator.remove();
-//                    }
-//                }
+                Iterator<Entry> iterator = entries.iterator();
+                while (iterator.hasNext()) {
+                    Entry entry = iterator.next();
+                    if (entry.content == null) {
+                        iterator.remove();
+                    }
+                }
                 newsListAdapter.setNewsEntityList(entries);
                 Log.e("economyCluster ", entries.size()+"");
             });
 
         }
-
 
         // 监听点击事件
         newsListAdapter.setOnItemClickListener(new NewsListAdapter.OnItemClickListener() {

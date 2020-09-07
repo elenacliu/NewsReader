@@ -24,13 +24,15 @@
             android:id="@+id/iv_hot1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icons8_fire_48"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_fire"
             android:visibility="visible" />
         <ImageView
             android:id="@+id/iv_hot2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icons8_fire_48"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_fire"
             android:visibility="gone" />
     </LinearLayout>
 

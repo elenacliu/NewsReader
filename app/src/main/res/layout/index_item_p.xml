@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--后续需要给每一项设置颜色-->
 <com.google.android.material.card.MaterialCardView
-    android:id="@+id/cardview_index"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     app:cardCornerRadius="@dimen/radius"
-    app:strokeColor="@color/color_h">
+    app:strokeColor="@color/color_p">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,22 +16,22 @@
             android:id="@+id/tv_index_name"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:text="H"
+            android:text="P"
             android:padding="2dp"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:textSize="@dimen/indexSize"
-            android:background="@color/color_h"/>
+            android:background="@color/color_p"/>
 
         <TextView
-            android:id="@+id/tv_index_num"
-            android:layout_width="24dp"
+            android:id="@+id/tv_p_num"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:padding="2dp"
             android:gravity="center"
             android:text="48"
-            android:textColor="@color/color_h"
+            android:textColor="@color/color_p"
             android:textSize="@dimen/indexSize"
             android:layout_toRightOf="@+id/tv_index_name" />
     </RelativeLayout>

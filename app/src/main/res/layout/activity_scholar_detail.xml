@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScholarDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar_layout"
+            android:id="@+id/toolbar_scholar_detail"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/newsDetailMarginSize"
+            android:layout_marginRight="@dimen/newsDetailMarginSize"
+            android:layout_marginLeft="@dimen/newsDetailMarginSize">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/newsDetailMarginSize"
+                android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                android:layout_marginRight="@dimen/newsDetailMarginSize"
+                android:layout_marginBottom="@dimen/newsDetailMarginSize">
+
+                <TextView
+                    android:id="@+id/tv_scholar_detail_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学者姓名"
+                    android:textSize="@dimen/titleSize"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/constraint_layout"
+                    app:layout_constraintTop_toTopOf="@+id/constraint_layout"/>
+
+                <ImageView
+                    android:id="@+id/iv_detail_avatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/avatar"
+                    android:layout_toRightOf="@+id/tv_scholar_detail_name"
+                    app:layout_constraintEnd_toEndOf="@+id/constraint_layout"
+                    app:layout_constraintTop_toTopOf="@+id/constraint_layout"/>
+
+
+                <androidx.constraintlayout.widget.Placeholder
+                    android:id="@+id/placeholder1"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    app:layout_constraintStart_toStartOf="@+id/constraint_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_scholar_detail_name"/>
+
+                <androidx.constraintlayout.widget.Placeholder
+                    android:id="@+id/placeholder3"
+                    android:layout_width="0dp"
+                    android:layout_height="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_scholar_detail_position"
+                    app:layout_constraintTop_toBottomOf="@+id/placeholder1"
+                    app:layout_constraintBottom_toTopOf="@+id/iv_briefcase"
+                    app:layout_constraintStart_toStartOf="@+id/constraint_layout"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_briefcase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_briefcase"
+                    app:layout_constraintStart_toStartOf="@id/constraint_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/placeholder3"/>
+
+                <androidx.constraintlayout.widget.Placeholder
+                    android:id="@+id/placeholder2"
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_briefcase"
+                    app:layout_constraintTop_toBottomOf="@+id/placeholder1"/>
+
+                <TextView
+                    android:id="@+id/tv_scholar_detail_position"
+                    app:layout_constraintTop_toBottomOf="@+id/placeholder1"
+                    app:layout_constraintStart_toEndOf="@id/placeholder2"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_detail_avatar"
+                    android:text="positionpositionpositionpositionpositionpositionpositionposition"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp" />
+
+
+                <androidx.constraintlayout.widget.Placeholder
+                    android:id="@+id/placeholder4"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    app:layout_constraintStart_toStartOf="@+id/constraint_layout"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_scholar_detail_position"/>
+
+                <androidx.constraintlayout.widget.Placeholder
+                    android:id="@+id/placeholder5"
+                    android:layout_width="0dp"
+                    android:layout_height="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_detail_affiliation"
+                    app:layout_constraintTop_toBottomOf="@+id/placeholder4"
+                    app:layout_constraintBottom_toTopOf="@+id/iv_detail_affiliation"
+                    app:layout_constraintStart_toStartOf="@+id/constraint_layout"
+                    />
+
+
+                <ImageView
+                    android:id="@+id/iv_detail_affiliation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_institution"
+                    app:layout_constraintStart_toStartOf="@+id/constraint_layout"
+                    app:layout_constraintTop_toBottomOf="@id/placeholder5"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_detail_affiliation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest"
+                    app:layout_constraintTop_toBottomOf="@id/placeholder4"
+                    app:layout_constraintStart_toEndOf="@id/placeholder2"
+                    app:layout_constraintEnd_toEndOf="@id/iv_detail_avatar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/newsDetailMarginSize"
+            android:layout_marginLeft="@dimen/newsDetailMarginSize"
+            android:layout_marginRight="@dimen/newsDetailMarginSize"
+            android:layout_marginBottom="@dimen/newsDetailMarginSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize"
+                    android:layout_marginTop="@dimen/newsDetailMarginSize">
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/iv_detail_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_profile"
+                        app:layout_constraintStart_toStartOf="@+id/constraint_layout1"
+                        app:layout_constraintTop_toTopOf="@+id/constraint_layout1"/>
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="16dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_detail_bio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="简介"
+                        android:layout_gravity="center_vertical"
+                        app:layout_constraintStart_toEndOf="@+id/iv_detail_profile"
+                        app:layout_constraintEnd_toEndOf="@+id/constraint_layout1"
+                        app:layout_constraintTop_toTopOf="@+id/constraint_layout1" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize"
+                    android:background="@android:color/black"/>
+
+                <TextView
+                    android:id="@+id/tv_detail_biocontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="biographybiographybiographybiographybiographybiographybiographybiographybiography\
+biographybiographybiographybiographybiographybiographybiographybiographybiographybiographybiographybiographybiographybiography"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize"
+                    android:layout_marginBottom="@dimen/newsDetailMarginSize" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/newsDetailMarginSize"
+            android:layout_marginLeft="@dimen/newsDetailMarginSize"
+            android:layout_marginBottom="@dimen/newsDetailMarginSize">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize"
+                    android:layout_marginTop="@dimen/newsDetailMarginSize">
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/iv_detail_edu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_education"
+                        app:layout_constraintStart_toStartOf="@+id/constraint_layout1"
+                        app:layout_constraintTop_toTopOf="@+id/constraint_layout1"/>
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="16dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_detail_edu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="教育经历"
+                        android:layout_gravity="center_vertical"
+                        app:layout_constraintStart_toEndOf="@+id/iv_detail_profile"
+                        app:layout_constraintEnd_toEndOf="@+id/constraint_layout1"
+                        app:layout_constraintTop_toTopOf="@+id/constraint_layout1" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize"
+                    android:background="@android:color/black"/>
+
+                <TextView
+                    android:id="@+id/tv_detail_educontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="educationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducation\
+educationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducation"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize"
+                    android:layout_marginBottom="@dimen/newsDetailMarginSize" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/newsDetailMarginSize"
+            android:layout_marginRight="@dimen/newsDetailMarginSize"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize"
+                    android:layout_marginTop="@dimen/newsDetailMarginSize">
+
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/iv_detail_work"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_work"
+                        app:layout_constraintStart_toStartOf="@+id/constraint_layout1"
+                        app:layout_constraintTop_toTopOf="@+id/constraint_layout1"/>
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="16dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_detail_work"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="工作经历"
+                        android:layout_gravity="center_vertical"
+                        app:layout_constraintStart_toEndOf="@+id/iv_detail_profile"
+                        app:layout_constraintEnd_toEndOf="@+id/constraint_layout1"
+                        app:layout_constraintTop_toTopOf="@+id/constraint_layout1" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize"
+                    android:background="@android:color/black"/>
+
+                <TextView
+                    android:id="@+id/tv_detail_workcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="educationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducation\
+educationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducationeducation"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize"
+                    android:layout_marginBottom="@dimen/newsDetailMarginSize" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

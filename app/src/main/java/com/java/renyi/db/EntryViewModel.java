@@ -79,6 +79,8 @@ public class EntryViewModel extends AndroidViewModel {
     public void searchEntity(String target) { mRepository.repoSearchEntity(target);}
     public void askGlobalStatus() { mRepository.repoAskGlobalStatus(); }
     public void askDomesticStatus() { mRepository.repoAskDomesticStatus(); }
+    public void askLivingScholar() { mRepository.repoAskLivingScholar(); }
+    public void askPassedAwayScholar() { mRepository.repoAskPassedAwayScholar(); }
 
     public LiveData<List<Entry>> getGlobalCluster() {
         return globalCluster;

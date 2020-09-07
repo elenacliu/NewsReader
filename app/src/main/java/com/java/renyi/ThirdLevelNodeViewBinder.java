@@ -47,7 +47,7 @@ public class ThirdLevelNodeViewBinder extends BaseNodeViewBinder {
         tv_property_name = itemView.findViewById(R.id.tv_property_name);
         tv_property_content = itemView.findViewById(R.id.tv_property_content);
 
-        // viewgroup设为不可见是否可行？
+        // viewgroup设为不可见是否可行？可行
         cardView1 = itemView.findViewById(R.id.entity_item_third_descrip);
         cardView2 = itemView.findViewById(R.id.entity_item_third_relation);
         cardView3 = itemView.findViewById(R.id.entity_item_third_property);

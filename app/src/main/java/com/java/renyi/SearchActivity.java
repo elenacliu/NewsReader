@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 // 参考：https://developer.android.google.cn/guide/topics/search/adding-recent-query-suggestions?hl=zh-cn#SavingQueries
-// TODO: 前端问题，页面数据无法正常显示
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -59,7 +58,6 @@ public class SearchActivity extends AppCompatActivity {
 
         // 获取recyclerview
         recyclerView = findViewById(R.id.recycler_view_search);
-//        initNews();
         // 创建adapter
         newsListAdapter = new NewsListAdapter(SearchActivity.this);
         newsListAdapter.setNewsEntityList(newsEntityList);
@@ -85,7 +83,6 @@ public class SearchActivity extends AppCompatActivity {
                 System.out.println(news);
                 Intent intent = new Intent(SearchActivity.this, NewsDetailActivity.class);
                 intent.putExtra("news", news);
-                // TODO: startForActivity() and receive a "false"
                 startActivity(intent);
             }
         });

@@ -20,13 +20,16 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="center">
+
             <ImageView
-                android:id="@+id/avatar"
+                android:id="@+id/scholar1_avatar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDetailMarginSize"
                 android:layout_gravity="center"
-                android:src="@drawable/avatar"
-                android:contentDescription="学者图片"/>
+                android:contentDescription="学者图片"
+                android:adjustViewBounds="true"
+                android:src="@drawable/avatar" />
         </LinearLayout>
 
         <LinearLayout
@@ -49,44 +52,53 @@
                     android:textStyle="bold"/>
 
                 <LinearLayout
-                    android:id="@+id/linearlayout_index"
+                    android:id="@+id/linearlayout_index1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginLeft="@dimen/newsDetailMarginSize"
                     android:layout_marginTop="@dimen/marginSize">
 
-                    <include layout="@layout/index_item"
-                        android:id="@+id/index_H" />
+                    <include layout="@layout/index_item_h"
+                        android:id="@+id/index_h" />
 
                     <View
                         android:id="@+id/placeholder"
                         android:layout_width="10dp"
                         android:layout_height="10dp"/>
 
-                    <include layout="@layout/index_item"
-                        android:id="@+id/index_A" />
+                    <include layout="@layout/index_item_a"
+                        android:id="@+id/index_a" />
 
                     <View
                         android:layout_width="10dp"
                         android:layout_height="10dp"/>
 
-                    <include layout="@layout/index_item"
-                        android:id="@+id/index_S" />
+                    <include layout="@layout/index_item_s"
+                        android:id="@+id/index_s" />
 
                     <View
                         android:layout_width="10dp"
                         android:layout_height="10dp"/>
 
-                    <include layout="@layout/index_item"
+                    <include layout="@layout/index_item_p"
+                        android:id="@+id/index_p" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_layout_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/marginSize"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize">
+
+
+                    <include layout="@layout/index_item_c"
                         android:id="@+id/index_c" />
 
-                    <View
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"/>
 
-                    <include layout="@layout/index_item"
-                        android:id="@+id/index_P" />
 
                 </LinearLayout>
 

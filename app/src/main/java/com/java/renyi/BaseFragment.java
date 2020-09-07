@@ -22,11 +22,8 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment {
 
     protected Context context;
-    protected boolean isVisible;
     private View rootView;
     Unbinder unbinder;
-
-//    Todo: Fragment懒加载，性能提升
 
     @Override
     public void onAttach(@NonNull Context context) {

@@ -115,7 +115,6 @@ public class EntitySearchActivity extends AppCompatActivity {
      * @return
      */
     private TreeNode buildTree(List<SearchEntity> entries) {
-        // 根节点什么都没有可行吗？可行（至少例子里是如此）
         TreeNode root = TreeNode.root();
         for (SearchEntity entry: entries) {
             // 一级父节点
@@ -130,7 +129,8 @@ public class EntitySearchActivity extends AppCompatActivity {
             root.addChild(parent);
 
             // 子节点: 描述
-            if (entry.getIntro() != null) {
+            if (entry.getIntro() != null && !entry.getIntro().equals("")
+                    && entry.getImg() != null && !entry.getImg().equals("")) {
                 TreeNode child = new TreeNode("描述");
                 child.setLevel(1);
                 System.out.println("----------");

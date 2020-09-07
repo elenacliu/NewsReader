@@ -38,7 +38,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-// TODO: toolbar and backpressed
 public class DataviewActivity extends AppCompatActivity {
 
     private BarChart barChart;

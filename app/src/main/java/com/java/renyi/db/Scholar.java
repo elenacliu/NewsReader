@@ -3,11 +3,12 @@ package com.java.renyi.db;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Scholar {
+public class Scholar implements Serializable {
     String avatar;
     Boolean bind;
     String id;
@@ -38,6 +39,98 @@ public class Scholar {
     Integer index;
     Integer tab;
     Boolean is_passedaway;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public Boolean getBind() {
+        return bind;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Float getActivity() {
+        return activity;
+    }
+
+    public Integer getCitations() {
+        return citations;
+    }
+
+    public Float getDiversity() {
+        return diversity;
+    }
+
+    public Integer getGindex() {
+        return gindex;
+    }
+
+    public Integer getHindex() {
+        return hindex;
+    }
+
+    public Float getNewStar() {
+        return newStar;
+    }
+
+    public Integer getPubs() {
+        return pubs;
+    }
+
+    public Float getSociability() {
+        return sociability;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getName_zh() {
+        return name_zh;
+    }
+
+    public Integer getNum_followed() {
+        return num_followed;
+    }
+
+    public Integer getNum_viewed() {
+        return num_viewed;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public Integer[] getTags_score() {
+        return tags_score;
+    }
+
+    public HashMap<String, String> getProfile() {
+        return profile;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public String getSourcetype() {
+        return sourcetype;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public Integer getTab() {
+        return tab;
+    }
+
+    public Boolean getIs_passedaway() {
+        return is_passedaway;
+    }
 
     Scholar(JSONObject o) {
         avatar = o.getString("avatar");
