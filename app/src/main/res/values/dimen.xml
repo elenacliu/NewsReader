@@ -2,6 +2,7 @@
 <resources>
     <dimen name="marginSize">16dp</dimen>
     <dimen name="textSize">16sp</dimen>
+    <dimen name="labelSize">24sp</dimen>
 
     <dimen name="dataTextSize">16sp</dimen>
     <dimen name="dataRegionSize">14sp</dimen>
