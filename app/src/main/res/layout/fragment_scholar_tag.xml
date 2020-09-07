@@ -6,6 +6,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_scholar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:background="@color/smart_refresh_bg"/>
 
 </androidx.core.widget.NestedScrollView>

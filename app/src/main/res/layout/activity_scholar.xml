@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ScholarActivity">
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/toolbar_layout"
+        android:id="@+id/toolbar_scholar" />
+
+<!--    两个标签占满所有 -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_scholar"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        app:tabMode="scrollable"
+        app:tabTextAppearance="@style/TabStyle"
+        app:layout_constraintBottom_toBottomOf="@+id/tag_setting_button"
+        app:layout_constraintEnd_toStartOf="@+id/tag_setting_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager_scholar_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+</LinearLayout>

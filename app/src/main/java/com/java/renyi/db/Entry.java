@@ -1,16 +1,22 @@
 package com.java.renyi.db;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import com.alibaba.fastjson.*;
+import com.java.renyi.LDA.me.xiaosheng.lda.HanLDA;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.java.renyi.SearchActivity;
+import org.ansj.domain.Term;
+import org.ansj.splitWord.analysis.ToAnalysis;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 @Entity(tableName = "entry_table")
 public class Entry implements Serializable {
@@ -25,8 +31,10 @@ public class Entry implements Serializable {
     public boolean viewed = false;
     public String category;
     public String urls;
+    public String cluster;
     public Entry(String _id) { this._id = _id;}
-    public Entry(String type, JSONObject json) {
+
+    public Entry(String type, JSONObject json, boolean getClusterImmediate) {
         _id = json.getString("_id");
         title = json.getString("title");
         content = json.getString("content");
@@ -39,9 +47,68 @@ public class Entry implements Serializable {
         time = proccessDate(json.getString("date"));
         this.type = json.getString("type");
 
+        if (getClusterImmediate)
+            cluster = getCluster(title, content);
+        else
+            cluster = "";
+
         viewed = false;
         category = json.getString("category");
         urls = json.getString("urls");
+    }
+
+    public void modifyCluster() {
+        cluster = getCluster(title, content);
+    }
+
+    private static boolean isChinese(String str){
+        String regEx = "[\\u4e00-\\u9fa5]+";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        return m.find();
+    }
+    private String getSplit(String s) {
+        List<Term> terms = ToAnalysis.parse(s).getTerms();
+        StringBuffer result = new StringBuffer("");
+        for (Term t: terms) {
+            result.append(" ".concat(t.getName()));
+        }
+//        Log.e("isChinese", result.toString());
+        return result.toString().trim();
+    }
+
+    private String split(String s) {
+        if (!isChinese(s)) {
+//            Log.e("notChinese", s);
+            return s;
+        }
+        return getSplit(s);
+    }
+    private String getCluster(String title, String content) {
+        String result = split(title.concat(" ").concat(content));
+        double [] topicDistribution = HanLDA.inferenceFromString(EntryRepository.getHDA(), result,false);
+        return getMaxTopic(topicDistribution);
+    }
+
+    private String getMaxTopic(double[] distribution) {
+        int maxID = 0;
+        double maxVal = distribution[0];
+        int length = distribution.length;
+        for (int i = 1; i < length; i++) {
+            if (distribution[i] > maxVal) {
+                maxVal = distribution[i];
+                maxID = i;
+            }
+        }
+
+        // Use mylda5141-3.model
+        if (maxID == 0)
+            return "国际疫情";
+        else if (maxID == 1)
+            return "国内资讯";
+        else if (maxID == 2)
+            return "经济发展";
+        return "topic" + maxID;
     }
 
     private String processAuthor(String jsonString) {
@@ -109,7 +176,10 @@ public class Entry implements Serializable {
 //                + " \ntime:" + time
 //                + "\nviewed:"+ viewed;
 ////                + "\nsource:" + source;
-        String ret = "id:" + _id + "\ntitle:" + title + "\ntime:"+time;
+        String ret = "id:" + _id + "\ntitle:" + title
+                + "\ncontent:" + content
+                + "\ntime:"+time
+                +"\n"+cluster;
         return ret;
     }
 }

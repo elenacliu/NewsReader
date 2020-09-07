@@ -36,20 +36,17 @@ public class FirstLevelNodeViewBinder extends BaseNodeViewBinder {
     public void bindView(TreeNode treeNode) {
         /**
          * 第一层
+         * List<Object>
          * List[0]: text
          * List[1]: hotness
          */
         Object value = treeNode.getValue();
         if (value instanceof List) {
-            tvLabel.setText((String)((List) value).get(0));
+            tvLabel.setText((String)((List)value).get(0));
             float hotness = (Float) ((List)value).get(1);   // 转换是否安全？
             if (hotness >= 0.5) {
-
+                ivHot2.setVisibility(View.VISIBLE);
             }
         }
-
-
-
-
     }
 }

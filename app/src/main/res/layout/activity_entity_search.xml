@@ -28,18 +28,18 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_entity"
+                <RelativeLayout
+                    android:id="@+id/container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                </androidx.recyclerview.widget.RecyclerView>
+                </RelativeLayout>
                 <LinearLayout
                     android:id="@+id/linear_layout_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginTop="@dimen/newsDetailMarginSize"
-                    android:layout_below="@+id/recycler_view_entity">
+                    android:layout_below="@+id/container">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -12,7 +12,13 @@ public class MyNodeViewFactory extends BaseNodeViewFactory {
         switch (level) {
             case 0:
                 return new FirstLevelNodeViewBinder(view);
+            case 1:
+                return new SecondLevelNodeViewBinder(view);
+            case 2:
+                return new ThirdLevelNodeViewBinder(view);
+            default:
+                return null;
         }
-        return null;
     }
+
 }

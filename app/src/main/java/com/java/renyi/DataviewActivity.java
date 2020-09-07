@@ -64,6 +64,8 @@ public class DataviewActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar_dataview);
         toolbar.setTitle("疫情数据");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//左侧添加一个默认的返回图标
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     /**

@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 tabLayout.setupWithViewPager(viewPager);
             }
         }
-
     }
 
     private void initView() {
@@ -220,7 +219,8 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                         else if (identifier == Constants.SCHOLAR_IDENTIFIER) {
-
+                            Intent intent = new Intent(MainActivity.this, ScholarActivity.class);
+                            startActivity(intent);
                         }
                         else if(identifier == Constants.HOME_IDENTIFIER) {
                             drawer.closeDrawer();
@@ -256,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
     private void setTagList() {
         tags.add("news");
         tags.add("paper");
+        tags.add("cluster");
 //        tags.add("推荐");
 //        tags.add("科技");
 //        tags.add("军事");

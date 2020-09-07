@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-class SearchEntity {
+public class SearchEntity {
     Float hot;
     String label;
     String url;
@@ -17,6 +17,35 @@ class SearchEntity {
     HashMap<String, String> property;
     List<HashMap<String, String>> relation;
     String img;
+
+    public Float getHot() {
+        return hot;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public HashMap<String, String> getProperty() {
+        return property;
+    }
+
+    public List<HashMap<String, String>> getRelation() {
+        return relation;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
     SearchEntity(JSONObject o) {
         hot = o.getFloat("hot");
         label = o.getString("label");
@@ -71,7 +100,7 @@ class SearchEntity {
         return ret.toString();
     }
 
-    private String showMap(HashMap<String, String> property) {
+    public static String showMap(HashMap<String, String> property) {
         StringBuilder result = new StringBuilder("");
         for (Map.Entry<String, String> entry : property.entrySet()) {
             result.append(entry.getKey()).append(" = ").append(entry.getValue()).append("\n");

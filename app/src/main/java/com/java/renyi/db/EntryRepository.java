@@ -1,38 +1,52 @@
 package com.java.renyi.db;
 
 import android.app.Application;
+import android.content.res.AssetManager;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.java.renyi.db.Entry;
-import com.java.renyi.db.EntryDao;
-import com.java.renyi.db.EntryRoomDatabase;
-import com.java.renyi.db.PandemicStatus;
+import com.alibaba.fastjson.*;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import com.java.renyi.LDA.me.xiaosheng.lda.LDAModel;
+import com.java.renyi.LDA.me.xiaosheng.lda.HanLDA;
+
+import org.ansj.domain.Term;
+import org.ansj.splitWord.analysis.ToAnalysis;
 
 import static com.java.renyi.db.EntryRoomDatabase.databaseWriteExecutor;
+import static com.java.renyi.db.GetHTML.getHTML;
 
 class EntryRepository {
     static private EntryDao mEntryDao;
 //    private LiveData<List<Entry>> mAllEntrys;
 
+    static private LDAModel hanLDA;
+    static public final Integer lockInt = 0;
     static private MutableLiveData<List<Entry>> mNewsEntries;
     static private MutableLiveData<List<Entry>> mPaperEntries;
     static private MutableLiveData<List<Entry>> mSearchResult;
     static private MutableLiveData<List<SearchEntity>> searchEntiryList;
     static private MutableLiveData<List<PandemicStatus>> globalStatus;
     static private MutableLiveData<List<PandemicStatus>> domesticStatus;
+    static private MutableLiveData<List<Scholar>> livingScholar;
+    static private MutableLiveData<List<Scholar>> passedAwayScholar;
+
+
+    private LiveData<List<Entry>> globalCluster;
+    private LiveData<List<Entry>> domesticCluster;
+    private LiveData<List<Entry>> economyCluster;
+
 
     static private  Application app;
     public static String lastNewsDate;
@@ -44,8 +58,8 @@ class EntryRepository {
     private static int nowNewsPage = 2;
     private  static int nowPaperPage = 2;
 
-    private static final int PAGE_SIZE = 10;
-    private static final int ADD_SIZE = 5;
+    private static final int PAGE_SIZE = 100;
+    private static final int ADD_SIZE = 10;
 
     static public MutableLiveData<List<Entry>> getCurrentNewsEntrys() {
         if (mNewsEntries == null) {
@@ -59,6 +73,20 @@ class EntryRepository {
             mPaperEntries = new MutableLiveData<>();
         }
         return mPaperEntries;
+    }
+
+    static public MutableLiveData<List<Scholar>> getLivingScholar() {
+        if (livingScholar == null) {
+            livingScholar = new MutableLiveData<>();
+        }
+        return livingScholar;
+    }
+
+    static public MutableLiveData<List<Scholar>> getPassedAwayScholar() {
+        if (passedAwayScholar == null) {
+            passedAwayScholar = new MutableLiveData<>();
+        }
+        return passedAwayScholar;
     }
 
     static public MutableLiveData<List<Entry>> getmSearchResult() {
@@ -90,26 +118,29 @@ class EntryRepository {
     }
 
     EntryRepository(Application application) {
+        app = application;
         Log.e("before db", "Before");
         EntryRoomDatabase db = EntryRoomDatabase.getDatabase(application);
         Log.e("after db", "Before");
-        app = application;
         mEntryDao = db.entryDao();
+        globalCluster = mEntryDao.getGlobalCluster();
+        domesticCluster = mEntryDao.getDomesticCluster();
+        economyCluster = mEntryDao.getEconomyCluster();
+
         databaseWriteExecutor.execute(() -> {
             // TODO : if first init no net, no get
-            // ADD_SIZE - 1 for refresh
             addMoreNews(ADD_SIZE);
             if (checkNetwork()) {
                 Log.e("AddNews", "Online");
-                refreshNews(true);
+                refreshNews(false);
             } else {
                 Looper.prepare();
                 Toast toast = Toast.makeText(app, "You Do not Have Network When First Entered", Toast.LENGTH_SHORT);
                 toast.show();
                 Looper.loop();
-
                 Log.e("AddNews", "Offline");
             }
+//            cluster();
         });
 
         databaseWriteExecutor.execute(() -> {
@@ -118,14 +149,73 @@ class EntryRepository {
             addMorePaper(ADD_SIZE);
             if (checkNetwork()) {
                 Log.e("AddPaper", "Online");
-                refreshPaper(true);
+                refreshPaper(false);
             } else {
                 Log.e("AddPaper", "Offline");
             }
+
+//            cluster();
+            
+            // TODO: insert and parse 699 events in one shot is too slow, consider insert multiple times or use multiple thread to insert
+//            insertEvents();
         });
 
+
+
+        databaseWriteExecutor.execute(()->{
+            // initialization for
+            Log.e("InitSplit", getTimeMilli());
+            List<Term> terms = ToAnalysis.parse("今天阳光普照，万物生辉。刘畅的白色衬衫很好看。").getTerms();
+            Log.e("SplitComplete", terms.toString());
+            Log.e("SplitComplete", getTimeMilli());
+            Log.e("AnthoerSplit", ToAnalysis.parse("今天阳光普照，万物生辉。").getTerms().toString());
+            Log.e("AnotherSplitComplete", getTimeMilli());
+        });
+
+        databaseWriteExecutor.execute(()->{
+            synchronized (lockInt) {
+                AssetManager assetManager = app.getAssets();
+                Log.e("begin getting LDA", "getting LDA" + getTimeMilli());
+                try {
+                    hanLDA = new LDAModel(assetManager.open("mylda5141-3.model"));
+//                    hanLDA = new LDAModel(assetManager.open("myldaAll-4.model"));
+                } catch (IOException e) {
+                    Log.e("repoInit","LoadModelFailed");
+                    e.printStackTrace();
+                }
+                Log.e("after getting LDA", "getting LDA"+getTimeMilli());
+            }
+        });
 //        mAllEntrys = mEntryDao.getAlphabetizedEntrys();
     }
+
+
+
+    private static void cluster() {
+        Log.e("beginCluster", getTimeMilli());
+        Entry[] entries = mEntryDao.getNotClustered();
+        int length = entries.length;
+        for (Entry entry : entries) {
+            entry.modifyCluster();
+        }
+        mEntryDao.update(entries);
+        Log.e("finishCluster", getTimeMilli());
+//        Toast.makeText(app, "ClusteredComplete!", Toast.LENGTH_SHORT).show();
+    }
+
+    public static LDAModel getHDA() {
+        if (hanLDA == null) {
+            Log.e("gettingLDAWaiting", "waiting"+getTimeMilli());
+            synchronized (lockInt) {
+                Log.e("gettingLDAOK", "OK"+getTimeMilli());
+                return hanLDA;
+            }
+        } else {
+            return hanLDA;
+        }
+    }
+
+
 
     public void setViewed(String _id, String type) {
         databaseWriteExecutor.execute(() -> {
@@ -171,13 +261,82 @@ class EntryRepository {
         });
     }
 
-    private static Entry[] getEntries(String naive_url, int page, int size, String type) {
+    public void repoAskLivingScholar() {
+        databaseWriteExecutor.execute(()->{
+            livingScholar.postValue(askLivingScholar());
+        });
+    }
+    public void repoAskPassedAwayScholar() {
+        databaseWriteExecutor.execute(()->{
+            passedAwayScholar.postValue(askPassedAwayScholar());
+        });
+    }
+    private List<Scholar> askLivingScholar() {
+        String url = "https://innovaapi.aminer.cn/predictor/api/v1/valhalla/highlight/get_ncov_expers_list?v=2";
+        String result = getHTML(url);
+        JSONObject jsonobject = JSON.parseObject(result);
+        List<Scholar> livingScholar = new ArrayList<Scholar>();
+
+        if ("success".equals(jsonobject.getString("message"))) {
+            JSONArray arr = jsonobject.getJSONArray("data");
+            int arrLength = arr.size();
+            for (int i = 0; i < arrLength; i++) {
+                JSONObject o = arr.getJSONObject(i);
+                Boolean isPassedAway = o.getBoolean("is_passedaway");
+                if (!isPassedAway)
+                    livingScholar.add(new Scholar(o));
+            }
+        }
+        return livingScholar;
+    }
+
+    private List<Scholar> askPassedAwayScholar() {
+        String url = "https://innovaapi.aminer.cn/predictor/api/v1/valhalla/highlight/get_ncov_expers_list?v=2";
+        String result = getHTML(url);
+        JSONObject jsonobject = JSON.parseObject(result);
+        List<Scholar> passedAwayScholar = new ArrayList<Scholar>();
+        if ("success".equals(jsonobject.getString("message"))) {
+            JSONArray arr = jsonobject.getJSONArray("data");
+            int arrLength = arr.size();
+            for (int i = 0; i < arrLength; i++) {
+                JSONObject o = arr.getJSONObject(i);
+                Boolean isPassedAway = o.getBoolean("is_passedaway");
+                if (isPassedAway)
+                    passedAwayScholar.add(new Scholar(o));
+            }
+        }
+        return passedAwayScholar;
+    }
+
+
+    LiveData<List<Entry>> getGlobalCluster() {return globalCluster;}
+    LiveData<List<Entry>> getDomesticCluster() {return domesticCluster;}
+    LiveData<List<Entry>> getEconomyCluster() {return economyCluster;}
+
+
+    private static String getTimeMilli() {
+        Calendar Cld = Calendar.getInstance();
+        int YY = Cld.get(Calendar.YEAR) ;
+        int MM = Cld.get(Calendar.MONTH)+1;
+        int DD = Cld.get(Calendar.DATE);
+        int HH = Cld.get(Calendar.HOUR_OF_DAY);
+        int mm = Cld.get(Calendar.MINUTE);
+        int SS = Cld.get(Calendar.SECOND);
+        int MI = Cld.get(Calendar.MILLISECOND);
+        return YY + "/" + MM + "/" + DD + "-" + HH + ":" + mm + ":" + SS + ":" + MI;
+    }
+
+    private static Entry[] getEntries(String naive_url, int page, int size, String type, boolean getClusterImmediate) {
         String url = naive_url + "?type=" + type + "&page=" + page + "&size=" + size;
-        String result = GetHTML.getHTML(url);
+        String result = getHTML(url);
         Log.e("after get HTML", "in getEntries");
         try {  // when no net, getJSONArray is on a null Object, which is error
             JSONArray jsonarr = JSON.parseObject(result).getJSONArray("data");
-            List<Entry> list = com.java.renyi.db.EntryRepository.parseJSONArray(type, jsonarr);
+
+            Log.e("beginParsing", "begin"+getTimeMilli());
+            List<Entry> list = EntryRepository.parseJSONArray(type, jsonarr, getClusterImmediate);
+            Log.e("afterParsing", "after"+getTimeMilli());
+
             return list.toArray(new Entry[list.size()]);
         } catch (Exception e) {
             Log.e("in getEntries error", e.toString());
@@ -186,19 +345,28 @@ class EntryRepository {
         }
     }
 
+    private static void insertEvents() {
+        String url = "https://covid-dashboard.aminer.cn/api/events/list";
+        Entry[] newPageEntry = getEntries(url, 1, 700, "event", true);
+        if (newPageEntry.length > 0) { // == 0 when getEntries Failed
+            mEntryDao.insert(newPageEntry);
+            Log.e("insertEvents!", newPageEntry.length+"");
+        }
+    }
 
     private static void getMoreNews() {
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
-        Entry[] newPageEntry = getEntries(url, nowNewsPage, PAGE_SIZE, "news");
+        Entry[] newPageEntry = getEntries(url, nowNewsPage, PAGE_SIZE, "news", false);
         if (newPageEntry.length > 0) { // == 0 when getEntries Failed
             mEntryDao.insert(newPageEntry);
             nowNewsPage += 1;
             Log.e("now news page", nowNewsPage+"");
         }
     }
+
     private static void getMorePaper() {
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
-        Entry[] newPageEntry = getEntries(url, nowPaperPage, PAGE_SIZE, "paper");
+        Entry[] newPageEntry = getEntries(url, nowPaperPage, PAGE_SIZE, "paper", false);
         if (newPageEntry.length > 0) { // == 0 when getEntries Failed
             mEntryDao.insert(newPageEntry);
             nowPaperPage += 1;
@@ -209,7 +377,7 @@ class EntryRepository {
 
     static private void refreshNews(boolean replace) {
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
-        Entry[] refreshed = getEntries(url, 1, PAGE_SIZE, "news");
+        Entry[] refreshed = getEntries(url, 1, PAGE_SIZE, "news", false);
         if (replace) {
             mEntryDao.insert_replace(refreshed);
         } else {
@@ -222,7 +390,7 @@ class EntryRepository {
 
     static private void refreshPaper(boolean replace) {
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
-        Entry[] refreshed = getEntries(url, 1, PAGE_SIZE, "paper");
+        Entry[] refreshed = getEntries(url, 1, PAGE_SIZE, "paper", false);
         if (replace) {
             mEntryDao.insert_replace(refreshed);
         } else {
@@ -265,11 +433,11 @@ class EntryRepository {
 
 
     // return the list of entry based on the given JSONArray
-    private static List<Entry> parseJSONArray(String type, JSONArray j) {
+    private static List<Entry> parseJSONArray(String type, JSONArray j, boolean getClusterImmediate) {
         List<Entry> res = new ArrayList<>();
         for (Object o: j) {
             JSONObject json = (JSONObject)(o);
-            res.add(new Entry(type, json));
+            res.add(new Entry(type, json, getClusterImmediate));
         }
         return res;
     }
@@ -304,6 +472,7 @@ class EntryRepository {
 
         Log.e("show size", update.size()+"");
         getCurrentNewsEntrys().postValue(update);
+//        cluster();
     }
 
     static private void addMorePaper(int offset) {
@@ -328,7 +497,7 @@ class EntryRepository {
             }
         }
         getCurrentPaperEntrys().postValue(update);
-
+//        cluster();
     }
 
     static private String getLatestDate() {
@@ -347,7 +516,7 @@ class EntryRepository {
 
     private List<SearchEntity> searchEntity(String target) {
         String url = "https://innovaapi.aminer.cn/covid/api/v1/pneumonia/entityquery?entity="+target;
-        String result = GetHTML.getHTML(url);
+        String result = getHTML(url);
         JSONObject jsonobject = JSON.parseObject(result);
         List<SearchEntity> searchEntityResult = new ArrayList<SearchEntity>();
         if ("success".equals(jsonobject.getString("msg"))) {
@@ -363,7 +532,7 @@ class EntryRepository {
     private List<PandemicStatus> askGlobalStatus() {
         List<PandemicStatus> global = new ArrayList<PandemicStatus>();
         String url = "https://covid-dashboard.aminer.cn/api/dist/epidemic.json";
-        String result = GetHTML.getHTML(url);
+        String result = getHTML(url);
         JSONObject jsonobject = JSON.parseObject(result);
         Set<String> keys = jsonobject.keySet();
         for (String s : keys) {
@@ -378,7 +547,7 @@ class EntryRepository {
     private  List<PandemicStatus> askDomesticStatus() {
         List<PandemicStatus> domestic = new ArrayList<PandemicStatus>();
         String url = "https://covid-dashboard.aminer.cn/api/dist/epidemic.json";
-        String result = GetHTML.getHTML(url);
+        String result = getHTML(url);
         JSONObject jsonobject = JSON.parseObject(result);
         Set<String> keys = jsonobject.keySet();
         for (String s : keys) {

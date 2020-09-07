@@ -4,29 +4,32 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.java.renyi.db.Entry;
-import com.java.renyi.db.PandemicStatus;
-
 import java.util.List;
+import java.util.ListIterator;
 
 public class EntryViewModel extends AndroidViewModel {
-    private com.java.renyi.db.EntryRepository mRepository;
+    private EntryRepository mRepository;
     private MutableLiveData<List<Entry>> mNewsEntries;
     private MutableLiveData<List<Entry>> mPaperEntries;
     private MutableLiveData<List<Entry>> mSearchResult;
     private MutableLiveData<List<SearchEntity>> mSearchEntityList;
     private MutableLiveData<List<PandemicStatus>> mGlobalStatus;
     private MutableLiveData<List<PandemicStatus>> mDomesticStatus;
+    private LiveData<List<Entry>> globalCluster;
+    private LiveData<List<Entry>> domesticCluster;
+    private LiveData<List<Entry>> economyCluster;
+    private MutableLiveData<List<Scholar>> livingScholar;
+    private MutableLiveData<List<Scholar>> passedAwayScholar;
 
 //    private LiveData<List<Entry>> mAllEntrys;
 
     public EntryViewModel (Application application) {
         super(application);
         Log.e("before repo", "Before");
-
-        mRepository = new com.java.renyi.db.EntryRepository(application);
+        mRepository = new EntryRepository(application);
         Log.e("after repo", "Before");
 //        mAllEntrys = mRepository.getAllEntrys();
         mNewsEntries = mRepository.getCurrentNewsEntrys();
@@ -35,6 +38,11 @@ public class EntryViewModel extends AndroidViewModel {
         mSearchEntityList = mRepository.getSearchEntityList();
         mGlobalStatus = mRepository.getGlobalStatus();
         mDomesticStatus = mRepository.getDomesticStatus();
+        livingScholar = mRepository.getLivingScholar();
+        passedAwayScholar = mRepository.getPassedAwayScholar();
+        globalCluster = mRepository.getGlobalCluster();
+        domesticCluster = mRepository.getDomesticCluster();
+        economyCluster = mRepository.getEconomyCluster();
     }
 
     public MutableLiveData<List<Entry>> getCurrentNewsEntrys() {
@@ -51,13 +59,15 @@ public class EntryViewModel extends AndroidViewModel {
     }
     public MutableLiveData<List<PandemicStatus>> getGlobalStatus() { return mGlobalStatus; }
     public MutableLiveData<List<PandemicStatus>> getDomesticStatus() { return mDomesticStatus; }
+    public MutableLiveData<List<Scholar>> getLivingScholar() { return livingScholar; }
+    public MutableLiveData<List<Scholar>> getPassedAwayScholar() { return passedAwayScholar; }
 
 
     public void addMorePaper() {
-        com.java.renyi.db.EntryRepository.repoAddMorePaper();
+        EntryRepository.repoAddMorePaper();
     }
     public void addMoreNews() {
-        com.java.renyi.db.EntryRepository.repoAddMoreNews();
+        EntryRepository.repoAddMoreNews();
     }
     public void refresh(String type) {
         mRepository.repoRefresh(type);
@@ -70,6 +80,17 @@ public class EntryViewModel extends AndroidViewModel {
     public void askGlobalStatus() { mRepository.repoAskGlobalStatus(); }
     public void askDomesticStatus() { mRepository.repoAskDomesticStatus(); }
 
-//    LiveData<List<Entry>> getAllEntrys() { return mAllEntrys; }
+    public LiveData<List<Entry>> getGlobalCluster() {
+        return globalCluster;
+    }
+
+    public LiveData<List<Entry>> getDomesticCluster() {
+        return domesticCluster;
+    }
+
+    public LiveData<List<Entry>> getEconomyCluster() {
+        return economyCluster;
+    }
+    //    LiveData<List<Entry>> getAllEntrys() { return mAllEntrys; }
 //    public void insert(Entry entry) { mRepository.insert(entry); }
 }

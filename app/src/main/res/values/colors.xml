@@ -38,4 +38,10 @@
     <color name="dataview_dead">#334169E1</color>
     <color name="datatext_dead">#4169E1</color>
 
+    <color name="color_h">#BCC8AE</color>
+    <color name="color_a">#C7BDA1</color>
+    <color name="color_s">#98BEC7</color>
+    <color name="color_c">#ADBBDC</color>
+    <color name="color_p">#A7C1BF</color>
+
 </resources>

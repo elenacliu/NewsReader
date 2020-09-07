@@ -5,8 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
-import com.java.renyi.db.Entry;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -17,6 +16,16 @@ public interface EntryDao {
     // conflict resolution strategy
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Entry... entry);
+
+    @Query("SELECT * from entry_table WHERE cluster == \"国际疫情\" ORDER BY time DESC")
+    LiveData<List<Entry>> getGlobalCluster();
+
+    @Query("SELECT * from entry_table WHERE cluster == \"国内资讯\" ORDER BY time DESC")
+    LiveData<List<Entry>> getDomesticCluster();
+
+    @Query("SELECT * from entry_table WHERE cluster == \"经济发展\" ORDER BY time DESC")
+    LiveData<List<Entry>> getEconomyCluster();
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert_replace(Entry... entry);
@@ -41,4 +50,10 @@ public interface EntryDao {
 
     @Query("SELECT * FROM entry_table WHERE title LIKE :target OR content LIKE :target ORDER BY time DESC")
     List<Entry> search(String target);
+
+    @Query("SELECT * FROM entry_table WHERE cluster == \"\"")
+    Entry[] getNotClustered();
+
+    @Update
+    void update(Entry... entries);
 }

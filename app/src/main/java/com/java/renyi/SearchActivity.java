@@ -52,7 +52,11 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initView() {
         toolbar = findViewById(R.id.toolbar_search);
+        toolbar.setTitle("搜索");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//左侧添加一个默认的返回图标
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         // 获取recyclerview
         recyclerView = findViewById(R.id.recycler_view_search);
 //        initNews();
@@ -92,7 +96,7 @@ public class SearchActivity extends AppCompatActivity {
             Toast.makeText(this, "请输入搜索内容", Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
             mEntryViewModel.search(query);
         }
     }

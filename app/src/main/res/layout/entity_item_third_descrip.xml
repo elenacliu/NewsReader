@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--描述：intro和图片-->
+
+
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -25,7 +27,7 @@
             android:layout_weight="2"/>
 
         <ImageView
-            android:id="@+id/iv_intro"
+            android:id="@+id/iv_img"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
