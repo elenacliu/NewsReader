@@ -75,7 +75,7 @@ public class TagFragment extends BaseFragment {
 
         if (currentTag.equals("paper")) {
             final Observer<List<Entry>> nowPaperEntryObserver = entries -> {
-                Log.e("onChanged", entries.size()+"");
+                Log.e("PaperToFront", entries.size()+"");
                 // TODO: Print entries, when content is null
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
@@ -85,12 +85,13 @@ public class TagFragment extends BaseFragment {
                     }
                 }
                 newsListAdapter.setNewsEntityList(entries);
+                Log.e("PaperToFrontFinal", entries.size()+"");
             };
             mEntryViewModel.getCurrentPaperEntrys().observe(this, nowPaperEntryObserver);
         }
         else if (currentTag.equals("news")) {
             final Observer<List<Entry>> nowNewsEntryObserver = entries -> {
-                Log.e("onChanged", entries.size()+"");
+                Log.e("NewsToFront: ", entries.size()+"");
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
@@ -99,6 +100,7 @@ public class TagFragment extends BaseFragment {
                     }
                 }
                 newsListAdapter.setNewsEntityList(entries);
+                Log.e("NewsToFrontFinal", entries.size()+"");
             };
             mEntryViewModel.getCurrentNewsEntrys().observe(this, nowNewsEntryObserver);
         }

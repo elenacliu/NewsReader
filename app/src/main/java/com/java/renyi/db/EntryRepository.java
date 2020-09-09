@@ -59,7 +59,7 @@ class EntryRepository {
     private  static int nowPaperPage = 2;
 
     private static final int PAGE_SIZE = 100;
-    private static final int ADD_SIZE = 10;
+    private static final int ADD_SIZE = 50;
 
     static public MutableLiveData<List<Entry>> getCurrentNewsEntrys() {
         if (mNewsEntries == null) {
@@ -118,6 +118,7 @@ class EntryRepository {
     }
 
     EntryRepository(Application application) {
+        Log.e("entering repo init", "initingRepo");
         app = application;
         Log.e("before db", "Before");
         EntryRoomDatabase db = EntryRoomDatabase.getDatabase(application);
@@ -140,7 +141,8 @@ class EntryRepository {
                 Looper.loop();
                 Log.e("AddNews", "Offline");
             }
-//            cluster();
+            Log.e("inInitCluster", "initing");
+            cluster();
         });
 
         databaseWriteExecutor.execute(() -> {
@@ -162,15 +164,15 @@ class EntryRepository {
 
 
 
-        databaseWriteExecutor.execute(()->{
-            // initialization for
-            Log.e("InitSplit", getTimeMilli());
-            List<Term> terms = ToAnalysis.parse("今天阳光普照，万物生辉。刘畅的白色衬衫很好看。").getTerms();
-            Log.e("SplitComplete", terms.toString());
-            Log.e("SplitComplete", getTimeMilli());
-            Log.e("AnthoerSplit", ToAnalysis.parse("今天阳光普照，万物生辉。").getTerms().toString());
-            Log.e("AnotherSplitComplete", getTimeMilli());
-        });
+//        databaseWriteExecutor.execute(()->{
+//            // initialization for
+//            Log.e("InitSplit", getTimeMilli());
+//            List<Term> terms = ToAnalysis.parse("今天阳光普照，万物生辉。刘畅的白色衬衫很好看。").getTerms();
+//            Log.e("SplitComplete", terms.toString());
+//            Log.e("SplitComplete", getTimeMilli());
+//            Log.e("AnthoerSplit", ToAnalysis.parse("今天阳光普照，万物生辉。").getTerms().toString());
+//            Log.e("AnotherSplitComplete", getTimeMilli());
+//        });
 
         databaseWriteExecutor.execute(()->{
             synchronized (lockInt) {
@@ -314,7 +316,7 @@ class EntryRepository {
     LiveData<List<Entry>> getEconomyCluster() {return economyCluster;}
 
 
-    private static String getTimeMilli() {
+    public  static String getTimeMilli() {
         Calendar Cld = Calendar.getInstance();
         int YY = Cld.get(Calendar.YEAR) ;
         int MM = Cld.get(Calendar.MONTH)+1;
@@ -444,6 +446,7 @@ class EntryRepository {
 
 
     static private void addMoreNews(int offset) {
+        boolean gotMoreToDB = false;
         if (lastNewsDate == null) {
             Log.e("in date null", "it is null");
             lastNewsDate = getLatestDate();
@@ -457,6 +460,7 @@ class EntryRepository {
             // TODO: first init no network?
             if (update.size() != 0 ) {  // enter this branch when no data in db
                 if (checkNetwork()) {
+                    gotMoreToDB = true;
                     getMoreNews();
                     update = mEntryDao.selectData("news", lastNewsDate, newsLimitNumber);
                 } else {
@@ -472,7 +476,8 @@ class EntryRepository {
 
         Log.e("show size", update.size()+"");
         getCurrentNewsEntrys().postValue(update);
-//        cluster();
+        if (gotMoreToDB)
+            cluster();
     }
 
     static private void addMorePaper(int offset) {

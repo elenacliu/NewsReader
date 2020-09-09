@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class EntryViewModel extends AndroidViewModel {
-    private EntryRepository mRepository;
+    static private EntryRepository mRepository;
     private MutableLiveData<List<Entry>> mNewsEntries;
     private MutableLiveData<List<Entry>> mPaperEntries;
     private MutableLiveData<List<Entry>> mSearchResult;
@@ -29,7 +29,8 @@ public class EntryViewModel extends AndroidViewModel {
     public EntryViewModel (Application application) {
         super(application);
         Log.e("before repo", "Before");
-        mRepository = new EntryRepository(application);
+        if (mRepository == null)
+            mRepository = new EntryRepository(application);
         Log.e("after repo", "Before");
 //        mAllEntrys = mRepository.getAllEntrys();
         mNewsEntries = mRepository.getCurrentNewsEntrys();

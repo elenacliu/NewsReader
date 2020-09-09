@@ -28,6 +28,7 @@ public class Entry implements Serializable {
     public String source;
     public String time;
     public String type;
+    public String seg_text;
     public boolean viewed = false;
     public String category;
     public String urls;
@@ -38,6 +39,7 @@ public class Entry implements Serializable {
         _id = json.getString("_id");
         title = json.getString("title");
         content = json.getString("content");
+        seg_text = json.getString("seg_text");
         // source needs special treatment in paper and events
         if ("news".equals(type)) {
             source = json.getString("source");
@@ -48,17 +50,16 @@ public class Entry implements Serializable {
         this.type = json.getString("type");
 
         if (getClusterImmediate)
-            cluster = getCluster(title, content);
+            cluster = getCluster();
         else
             cluster = "";
-
         viewed = false;
         category = json.getString("category");
         urls = json.getString("urls");
     }
 
     public void modifyCluster() {
-        cluster = getCluster(title, content);
+        cluster = getCluster();
     }
 
     private static boolean isChinese(String str){
@@ -67,8 +68,17 @@ public class Entry implements Serializable {
         Matcher m = p.matcher(str);
         return m.find();
     }
+
+    static int splitCnt = 0;
     private String getSplit(String s) {
+        if (splitCnt < 3 ) {
+            Log.e("splitStart"+splitCnt, EntryRepository.getTimeMilli());
+        }
         List<Term> terms = ToAnalysis.parse(s).getTerms();
+        if (splitCnt < 3 ) {
+            Log.e("splitFinish"+splitCnt, EntryRepository.getTimeMilli());
+        }
+        splitCnt+=1;
         StringBuffer result = new StringBuffer("");
         for (Term t: terms) {
             result.append(" ".concat(t.getName()));
@@ -82,10 +92,13 @@ public class Entry implements Serializable {
 //            Log.e("notChinese", s);
             return s;
         }
+//        return s.seg_text;
         return getSplit(s);
     }
-    private String getCluster(String title, String content) {
-        String result = split(title.concat(" ").concat(content));
+    private String getCluster() {
+        String result = seg_text;
+        if (result == null)
+            return "";
         double [] topicDistribution = HanLDA.inferenceFromString(EntryRepository.getHDA(), result,false);
         return getMaxTopic(topicDistribution);
     }
