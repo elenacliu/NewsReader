@@ -18,9 +18,11 @@ public class EntryViewModel extends AndroidViewModel {
     private MutableLiveData<List<SearchEntity>> mSearchEntityList;
     private MutableLiveData<List<PandemicStatus>> mGlobalStatus;
     private MutableLiveData<List<PandemicStatus>> mDomesticStatus;
-    private LiveData<List<Entry>> globalCluster;
-    private LiveData<List<Entry>> domesticCluster;
-    private LiveData<List<Entry>> economyCluster;
+    private LiveData<List<Entry>> researchCluster;
+    private LiveData<List<Entry>> medicineCluster;
+    private LiveData<List<Entry>> pandemicCluster;
+    private LiveData<List<Entry>> treatmentCluster;
+
     private MutableLiveData<List<Scholar>> livingScholar;
     private MutableLiveData<List<Scholar>> passedAwayScholar;
 
@@ -41,9 +43,10 @@ public class EntryViewModel extends AndroidViewModel {
         mDomesticStatus = mRepository.getDomesticStatus();
         livingScholar = mRepository.getLivingScholar();
         passedAwayScholar = mRepository.getPassedAwayScholar();
-        globalCluster = mRepository.getGlobalCluster();
-        domesticCluster = mRepository.getDomesticCluster();
-        economyCluster = mRepository.getEconomyCluster();
+        researchCluster = mRepository.getResearchCluster();
+        medicineCluster = mRepository.getMedicineCluster();
+        pandemicCluster = mRepository.getPandemicCluster();
+        treatmentCluster = mRepository.getTreatmentCluster();
     }
 
     public MutableLiveData<List<Entry>> getCurrentNewsEntrys() {
@@ -83,16 +86,24 @@ public class EntryViewModel extends AndroidViewModel {
     public void askLivingScholar() { mRepository.repoAskLivingScholar(); }
     public void askPassedAwayScholar() { mRepository.repoAskPassedAwayScholar(); }
 
-    public LiveData<List<Entry>> getGlobalCluster() {
-        return globalCluster;
+    public LiveData<List<Entry>> getResearchCluster() {
+        return researchCluster;
     }
 
-    public LiveData<List<Entry>> getDomesticCluster() {
-        return domesticCluster;
+    public LiveData<List<Entry>> getMedicineCluster() {
+        return medicineCluster;
     }
 
-    public LiveData<List<Entry>> getEconomyCluster() {
-        return economyCluster;
+    public LiveData<List<Entry>> getPandemicCluster() {
+        return pandemicCluster;
+    }
+
+    public void addMoreEvents() {
+        mRepository.addMoreEvents();
+    }
+
+    public LiveData<List<Entry>> getTreatmentCluster() {
+        return treatmentCluster;
     }
     //    LiveData<List<Entry>> getAllEntrys() { return mAllEntrys; }
 //    public void insert(Entry entry) { mRepository.insert(entry); }

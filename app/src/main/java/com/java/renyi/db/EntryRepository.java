@@ -42,10 +42,10 @@ class EntryRepository {
     static private MutableLiveData<List<Scholar>> livingScholar;
     static private MutableLiveData<List<Scholar>> passedAwayScholar;
 
-
-    private LiveData<List<Entry>> globalCluster;
-    private LiveData<List<Entry>> domesticCluster;
-    private LiveData<List<Entry>> economyCluster;
+    private LiveData<List<Entry>> researchCluster;
+    private LiveData<List<Entry>> medicineCluster;
+    private LiveData<List<Entry>> pandemicCluster;
+    private LiveData<List<Entry>> treatmentCluster;
 
 
     static private  Application app;
@@ -57,6 +57,8 @@ class EntryRepository {
 
     private static int nowNewsPage = 2;
     private  static int nowPaperPage = 2;
+    private static int nowEventPage = 1;
+    private static final int eventPageSize = 50;
 
     private static final int PAGE_SIZE = 100;
     private static final int ADD_SIZE = 50;
@@ -124,9 +126,10 @@ class EntryRepository {
         EntryRoomDatabase db = EntryRoomDatabase.getDatabase(application);
         Log.e("after db", "Before");
         mEntryDao = db.entryDao();
-        globalCluster = mEntryDao.getGlobalCluster();
-        domesticCluster = mEntryDao.getDomesticCluster();
-        economyCluster = mEntryDao.getEconomyCluster();
+        researchCluster = mEntryDao.getResearchCluster();
+        medicineCluster = mEntryDao.getMedicineCluster();
+        pandemicCluster = mEntryDao.getPandemicCluster();
+        treatmentCluster = mEntryDao.getTreatmentCluster();
 
         databaseWriteExecutor.execute(() -> {
             // TODO : if first init no net, no get
@@ -158,6 +161,10 @@ class EntryRepository {
 
 //            cluster();
             
+
+        });
+
+        databaseWriteExecutor.execute(()->{
             // TODO: insert and parse 699 events in one shot is too slow, consider insert multiple times or use multiple thread to insert
             insertEvents();
         });
@@ -313,10 +320,10 @@ class EntryRepository {
     }
 
 
-    LiveData<List<Entry>> getGlobalCluster() {return globalCluster;}
-    LiveData<List<Entry>> getDomesticCluster() {return domesticCluster;}
-    LiveData<List<Entry>> getEconomyCluster() {return economyCluster;}
-
+    LiveData<List<Entry>> getResearchCluster() {return researchCluster;}
+    LiveData<List<Entry>> getMedicineCluster() {return medicineCluster;}
+    LiveData<List<Entry>> getPandemicCluster() {return pandemicCluster;}
+    LiveData<List<Entry>> getTreatmentCluster() { return treatmentCluster; }
 
     public  static String getTimeMilli() {
         Calendar Cld = Calendar.getInstance();
@@ -350,10 +357,11 @@ class EntryRepository {
     private static void insertEvents() {
         Log.e("begin InsertEvents", getTimeMilli());
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
-        Entry[] newPageEntry = getEntries(url, 1, 700, "event", true);
+        Entry[] newPageEntry = getEntries(url, nowEventPage, eventPageSize, "event", true);
         if (newPageEntry.length > 0) { // == 0 when getEntries Failed
             mEntryDao.insert(newPageEntry);
             Log.e("insertEvents!", getTimeMilli());
+            nowEventPage += 1;
         }
     }
 
@@ -376,8 +384,6 @@ class EntryRepository {
         }
     }
 
-
-
     static private void refreshNews(boolean replace) {
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
         Entry[] refreshed = getEntries(url, 1, PAGE_SIZE, "news", false);
@@ -386,6 +392,7 @@ class EntryRepository {
         } else {
             mEntryDao.insert(refreshed);
         }
+
         lastNewsDate = null;
         newsLimitNumber = 0;
         addMoreNews(ADD_SIZE);
@@ -433,8 +440,6 @@ class EntryRepository {
         });
     }
 
-
-
     // return the list of entry based on the given JSONArray
     private static List<Entry> parseJSONArray(String type, JSONArray j, boolean getClusterImmediate) {
         List<Entry> res = new ArrayList<>();
@@ -444,7 +449,6 @@ class EntryRepository {
         }
         return res;
     }
-
 
     static private void addMoreNews(int offset) {
         boolean gotMoreToDB = false;
@@ -572,4 +576,12 @@ class EntryRepository {
         JSONArray dataArr = jsonobject.getJSONObject(key).getJSONArray("data");
         return dataArr.get(dataArr.size()- 1).toString();
     }
+
+    public void addMoreEvents() {
+        databaseWriteExecutor.execute(()->{
+            insertEvents();
+        });
+    }
+
+
 }

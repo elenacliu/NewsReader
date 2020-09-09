@@ -30,7 +30,6 @@ public abstract class EntryRoomDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             EntryRoomDatabase.class, "entry_database")
                             .build();
-                    // TODO: CALL BACK?
                 }
             }
         }

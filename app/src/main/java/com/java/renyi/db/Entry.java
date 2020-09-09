@@ -35,6 +35,7 @@ public class Entry implements Serializable {
     public String cluster;
     public Entry(String _id) { this._id = _id;}
 
+
     public Entry(String type, JSONObject json, boolean getClusterImmediate) {
         _id = json.getString("_id");
         title = json.getString("title");
@@ -114,13 +115,18 @@ public class Entry implements Serializable {
             }
         }
 
-        // Use mylda5141-3.model
+        // Use event-5-lts.model
+        Log.e("maxID = ", maxID+"");
         if (maxID == 0)
-            return "国际疫情";
+            return "病毒研究";
         else if (maxID == 1)
-            return "国内资讯";
+            return "疫情形势";
         else if (maxID == 2)
-            return "经济发展";
+            return "病毒研究";
+        else if (maxID == 3)
+            return "疫苗药物";
+        else if (maxID == 4)
+            return "患者治疗";
         return "topic" + maxID;
     }
 

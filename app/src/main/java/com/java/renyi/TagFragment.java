@@ -104,16 +104,23 @@ public class TagFragment extends BaseFragment {
             };
             mEntryViewModel.getCurrentNewsEntrys().observe(this, nowNewsEntryObserver);
         }
-        else if (currentTag.equals("cluster")) {
+        else if (currentTag.equals("病毒研究")) {
+            mEntryViewModel.getResearchCluster().observe(this, entries -> {
+                Iterator<Entry> iterator = entries.iterator();
+                while (iterator.hasNext()) {
+                    Entry entry = iterator.next();
+                    if (entry.content == null) {
+                        iterator.remove();
+                    }
+                }
 
+                newsListAdapter.setNewsEntityList(entries);
+                Log.e("researchCluster ", entries.size()+"");
+            });
+        }
 
-            mEntryViewModel.getGlobalCluster().observe(this, entries -> {
-                Log.e("globalCluster ", entries.size()+"");
-            });
-            mEntryViewModel.getDomesticCluster().observe(this, entries -> {
-                Log.e("domesticCluster ", entries.size()+"");
-            });
-            mEntryViewModel.getEconomyCluster().observe(this, entries -> {
+        else if (currentTag.equals("疫苗药物")) {
+            mEntryViewModel.getMedicineCluster().observe(this, entries -> {
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
@@ -122,9 +129,35 @@ public class TagFragment extends BaseFragment {
                     }
                 }
                 newsListAdapter.setNewsEntityList(entries);
-                Log.e("economyCluster ", entries.size()+"");
+                Log.e("medicineCluster ", entries.size()+"");
             });
+        }
 
+        else if (currentTag.equals("疫情形势")) {
+            mEntryViewModel.getPandemicCluster().observe(this, entries -> {
+                Iterator<Entry> iterator = entries.iterator();
+                while (iterator.hasNext()) {
+                    Entry entry = iterator.next();
+                    if (entry.content == null) {
+                        iterator.remove();
+                    }
+                }
+                newsListAdapter.setNewsEntityList(entries);
+                Log.e("pandemicCluster ", entries.size()+"");
+            });
+        }
+        else if (currentTag.equals("患者治疗")) {
+            mEntryViewModel.getTreatmentCluster().observe(this, entries -> {
+                Iterator<Entry> iterator = entries.iterator();
+                while (iterator.hasNext()) {
+                    Entry entry = iterator.next();
+                    if (entry.content == null) {
+                        iterator.remove();
+                    }
+                }
+                newsListAdapter.setNewsEntityList(entries);
+                Log.e("treatmentCluster", entries.size()+"");
+            });
         }
 
         // 监听点击事件
@@ -173,6 +206,8 @@ public class TagFragment extends BaseFragment {
                 }
                 else if (currentTag.equals("news")) {
                     mEntryViewModel.addMoreNews();
+                } else if (currentTag.equals("病毒研究") || currentTag.equals("疫苗药物") || currentTag.equals("疫情形势") || currentTag.equals("患者治疗")) {
+                    mEntryViewModel.addMoreEvents();
                 }
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }

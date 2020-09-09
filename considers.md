@@ -11,7 +11,10 @@
 
 
 1. create database using java
-2. 
+   - create table
+   - read json and predict
+   - insert into table
+2. prepopulate it into app
 
 
 
