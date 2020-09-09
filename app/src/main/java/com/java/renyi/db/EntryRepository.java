@@ -142,7 +142,7 @@ class EntryRepository {
                 Log.e("AddNews", "Offline");
             }
             Log.e("inInitCluster", "initing");
-            cluster();
+//            cluster();
         });
 
         databaseWriteExecutor.execute(() -> {
@@ -159,7 +159,7 @@ class EntryRepository {
 //            cluster();
             
             // TODO: insert and parse 699 events in one shot is too slow, consider insert multiple times or use multiple thread to insert
-//            insertEvents();
+            insertEvents();
         });
 
 
@@ -179,7 +179,9 @@ class EntryRepository {
                 AssetManager assetManager = app.getAssets();
                 Log.e("begin getting LDA", "getting LDA" + getTimeMilli());
                 try {
-                    hanLDA = new LDAModel(assetManager.open("mylda5141-3.model"));
+//                    hanLDA = new LDAModel(assetManager.open("mylda5141-3.model"));
+                    hanLDA = new LDAModel(assetManager.open("event-5.model"));
+
 //                    hanLDA = new LDAModel(assetManager.open("myldaAll-4.model"));
                 } catch (IOException e) {
                     Log.e("repoInit","LoadModelFailed");
@@ -334,11 +336,9 @@ class EntryRepository {
         Log.e("after get HTML", "in getEntries");
         try {  // when no net, getJSONArray is on a null Object, which is error
             JSONArray jsonarr = JSON.parseObject(result).getJSONArray("data");
-
             Log.e("beginParsing", "begin"+getTimeMilli());
             List<Entry> list = EntryRepository.parseJSONArray(type, jsonarr, getClusterImmediate);
             Log.e("afterParsing", "after"+getTimeMilli());
-
             return list.toArray(new Entry[list.size()]);
         } catch (Exception e) {
             Log.e("in getEntries error", e.toString());
@@ -348,11 +348,12 @@ class EntryRepository {
     }
 
     private static void insertEvents() {
+        Log.e("begin InsertEvents", getTimeMilli());
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
         Entry[] newPageEntry = getEntries(url, 1, 700, "event", true);
         if (newPageEntry.length > 0) { // == 0 when getEntries Failed
             mEntryDao.insert(newPageEntry);
-            Log.e("insertEvents!", newPageEntry.length+"");
+            Log.e("insertEvents!", getTimeMilli());
         }
     }
 
@@ -476,8 +477,8 @@ class EntryRepository {
 
         Log.e("show size", update.size()+"");
         getCurrentNewsEntrys().postValue(update);
-        if (gotMoreToDB)
-            cluster();
+//        if (gotMoreToDB)
+//            cluster();
     }
 
     static private void addMorePaper(int offset) {
