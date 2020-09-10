@@ -111,6 +111,7 @@ public class TagFragment extends BaseFragment {
             };
             mEntryViewModel.getCurrentNewsEntrys().observe(this, nowNewsEntryObserver);
         }
+
         else if (currentTag.equals("病毒研究")) {
             mEntryViewModel.getResearchCluster().observe(this, entries -> {
                 Iterator<Entry> iterator = entries.iterator();

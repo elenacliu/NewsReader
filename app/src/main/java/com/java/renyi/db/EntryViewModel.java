@@ -89,11 +89,7 @@ public class EntryViewModel extends AndroidViewModel {
     public LiveData<List<Entry>> getResearchCluster() {
         return researchCluster;
     }
-
-    public LiveData<List<Entry>> getMedicineCluster() {
-        return medicineCluster;
-    }
-
+    public LiveData<List<Entry>> getMedicineCluster() { return medicineCluster; }
     public LiveData<List<Entry>> getPandemicCluster() {
         return pandemicCluster;
     }
