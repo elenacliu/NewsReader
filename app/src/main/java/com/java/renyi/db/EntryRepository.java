@@ -254,29 +254,64 @@ class EntryRepository {
 
     public void repoSearchEntity(String target) {
         databaseWriteExecutor.execute(()->{
-            searchEntiryList.postValue(searchEntity(target));
+            if (checkNetwork()) {
+                searchEntiryList.postValue(searchEntity(target));
+            }
+            else {
+                Looper.prepare();
+                Toast.makeText(app,"You Do Not Have Network When Getting Search Entity", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
         });
     }
 
     public void repoAskGlobalStatus() {
         databaseWriteExecutor.execute(()->{
-            globalStatus.postValue(askGlobalStatus());
+            if (checkNetwork()) {
+                globalStatus.postValue(askGlobalStatus());
+            }
+            else {
+                Looper.prepare();
+                Toast.makeText(app,"You Do Not Have Network When Getting Global Pandemic Info", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
         });
     }
     public void repoAskDomesticStatus() {
         databaseWriteExecutor.execute(()->{
-            domesticStatus.postValue(askDomesticStatus());
+            if (checkNetwork()) {
+                domesticStatus.postValue(askDomesticStatus());
+            }
+            else {
+                Looper.prepare();
+                Toast.makeText(app,"You Do Not Have Network When Getting Domestic Pandemic Info", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
         });
     }
 
     public void repoAskLivingScholar() {
         databaseWriteExecutor.execute(()->{
-            livingScholar.postValue(askLivingScholar());
+            if (checkNetwork()) {
+                livingScholar.postValue(askLivingScholar());
+            }
+            else {
+                Looper.prepare();
+                Toast.makeText(app,"You Do Not Have Network When Getting Living Scholar Info", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
         });
     }
     public void repoAskPassedAwayScholar() {
         databaseWriteExecutor.execute(()->{
-            passedAwayScholar.postValue(askPassedAwayScholar());
+            if (checkNetwork()) {
+                passedAwayScholar.postValue(askPassedAwayScholar());
+            }
+            else {
+                Looper.prepare();
+                Toast.makeText(app,"You Do Not Have Network When Getting Living Scholar Info", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
         });
     }
     private List<Scholar> askLivingScholar() {
