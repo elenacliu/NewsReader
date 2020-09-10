@@ -1,5 +1,6 @@
 package com.java.renyi;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SearchRecentSuggestionsProvider;
@@ -83,7 +85,7 @@ public class SearchActivity extends AppCompatActivity {
                 System.out.println(news);
                 Intent intent = new Intent(SearchActivity.this, NewsDetailActivity.class);
                 intent.putExtra("news", news);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.UPDATE_REQUEST);
             }
         });
     }
@@ -102,5 +104,18 @@ public class SearchActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         newsListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 请求变灰
+        if (requestCode == Constants.UPDATE_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                assert data != null;
+                Log.e("requesting grey", (data.getStringExtra("title")));
+                mEntryViewModel.setViewed(data.getStringExtra("id"), data.getStringExtra("type"));
+            }
+        }
     }
 }

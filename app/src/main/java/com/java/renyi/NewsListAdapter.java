@@ -41,8 +41,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Entry news = newsEntityList.get(position);
 
-
-
         // 如果该新闻被看过
         if (news.viewed) {
             holder.title.setText(news.title);

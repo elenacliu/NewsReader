@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    
-    <data>
-        <variable
-            name="newsItemListener"
-            type="com.java.renyi.OnTaskItemListener" />
-    </data>
-
     <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,8 +9,7 @@
         app:cardBackgroundColor="@color/card_view_bg"
         android:layout_marginTop="@dimen/newsTitleMarginSize"
         android:layout_marginLeft="@dimen/newsTitleMarginSize"
-        android:layout_marginRight="@dimen/newsTitleMarginSize"
-        android:onClick="@{()->newsItemListener.onItemClick()}">
+        android:layout_marginRight="@dimen/newsTitleMarginSize">
 
         <LinearLayout
             android:id="@+id/linear_layout"
@@ -80,5 +70,5 @@
 
 
     </androidx.cardview.widget.CardView>
-</layout>
+
 

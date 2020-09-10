@@ -238,9 +238,7 @@ public class TagFragment extends BaseFragment {
         }
     }
 
-    /**
-     * TODO: load more?
-     */
+
     public void onResume() {
         super.onResume();
         Log.e("onResume", currentTag +" onResume");

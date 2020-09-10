@@ -70,6 +70,7 @@ public class NewsDetailActivity extends AppCompatActivity implements IWXAPIEvent
         Intent intent = getIntent();
         intent.putExtra("id", news.get_id());
         intent.putExtra("title", news.title);
+        intent.putExtra("type", news.type);
 
         setResult(Activity.RESULT_OK, intent);
     }
