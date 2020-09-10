@@ -120,7 +120,7 @@ class EntryRepository {
     }
 
     EntryRepository(Application application) {
-        Log.e("entering repo init", "initingRepo");
+        Log.e("entering repo init", getTimeMilli());
         app = application;
         Log.e("before db", "Before");
         EntryRoomDatabase db = EntryRoomDatabase.getDatabase(application);
@@ -529,6 +529,7 @@ class EntryRepository {
 
         Log.e("show size", update.size()+"");
         getCurrentNewsEntrys().postValue(update);
+        Log.e("posted!", getTimeMilli());
     }
 
     static private void addMorePaper(int offset) {
