@@ -5,10 +5,11 @@
     android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.scwang.smart.refresh.header.ClassicsHeader
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/smart_refresh_bg"/>
+<!--    <com.scwang.smart.refresh.header.ClassicsHeader-->
+<!--        android:id="@+id/news_list_header"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/smart_refresh_bg" />-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

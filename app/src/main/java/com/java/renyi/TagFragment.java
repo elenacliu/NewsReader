@@ -185,30 +185,7 @@ public class TagFragment extends BaseFragment {
             }
         });
 
-
-        refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
         refreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
-        // 注意每次实施onfresh判断一下网络连接状态
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                if (!NetworkUtil.isNetworkAvailable(getActivity())) {
-                    Toast.makeText(getActivity(), "offline",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getActivity(), "online", Toast.LENGTH_SHORT).show();
-                    if (currentTag.equals("paper")) {
-                        mEntryViewModel.refresh("paper");
-                    }
-                    else if (currentTag.equals("news")) {
-                        mEntryViewModel.refresh("news");
-                    }
-                }
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
-            }
-        });
-
-        // TODO: get op3，上拉加载，获取更多新闻
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
@@ -223,6 +200,32 @@ public class TagFragment extends BaseFragment {
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
         });
+
+        if (currentTag.equals("news") || currentTag.equals("paper")) {
+            refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));
+            // 注意每次实施onfresh判断一下网络连接状态
+            refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+                @Override
+                public void onRefresh(RefreshLayout refreshlayout) {
+                    if (!NetworkUtil.isNetworkAvailable(getActivity())) {
+                        Toast.makeText(getActivity(), "offline",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(getActivity(), "online", Toast.LENGTH_SHORT).show();
+                        if (currentTag.equals("paper")) {
+                            mEntryViewModel.refresh("paper");
+                        }
+                        else if (currentTag.equals("news")) {
+                            mEntryViewModel.refresh("news");
+                        }
+                    }
+                    refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                }
+            });
+        }
+        else {
+            refreshLayout.setEnableRefresh(false);
+        }
     }
 
     @Override
