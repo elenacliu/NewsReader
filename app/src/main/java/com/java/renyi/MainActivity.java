@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     // 标签页数据和Fragment数据（暂定，按理要和TagSetting Activity做通信）
     // TODO: 该数据得存入SharePreferences中
-    private ArrayList<String> tags = new ArrayList<>();
-    private ArrayList<String> delTags = new ArrayList<>();
+    private ArrayList<String> tags;
+    private ArrayList<String> delTags;
 //    HashMap<String, TagFragment> hashMap = new HashMap<>();
     private ArrayList<TagFragment> fragments = new ArrayList<>();
     // 适配器
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 homePagerAdapter.setFragmentList(fragments);
                 viewPager.setAdapter(homePagerAdapter);
                 tabLayout.setupWithViewPager(viewPager);
+                saveTags();
             }
         }
     }
@@ -248,15 +250,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void setTagList() {
-        tags.add("news");
-        tags.add("paper");
-        tags.add("病毒研究");
-        tags.add("疫苗药物");
-        tags.add("疫情形势");
-        tags.add("患者治疗");
-    }
-
     // 初始化菜单栏，用Java代码创建SearchView (activity_main.xml中没有显式写入)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -277,4 +270,56 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * 参考：https://www.jianshu.com/p/462d9f39e244
+     */
+    private void saveTags() {
+        SharedPreferences.Editor editorTags = getSharedPreferences("tags", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editorDel = getSharedPreferences("delTags", MODE_PRIVATE).edit();
+
+        editorTags.putInt("TagNum", tags.size());
+        editorDel.putInt("DelNum", delTags.size());
+        for (int i = 0; i < tags.size(); i++) {
+            editorTags.putString("tag_"+i, tags.get(i));
+        }
+        for (int i = 0; i < delTags.size(); i++) {
+            editorTags.putString("deltag_"+i, delTags.get(i));
+        }
+
+        editorTags.commit();
+        editorDel.commit();
+    }
+
+    /**
+     * 判断是否是第一次进入应用
+     * 若是，直接设置tag
+     * 若不是，则从sharedpreferences导入
+     */
+    private void setTagList() {
+        tags = new ArrayList<>();
+        delTags = new ArrayList<>();
+        SharedPreferences preferencesTag = getSharedPreferences("tags", MODE_PRIVATE);
+        SharedPreferences preferencesDel = getSharedPreferences("delTags", MODE_PRIVATE);
+        int lengthTag = preferencesTag.getInt("TagNum", -1);     // default num is 6
+        int lengthDel = preferencesDel.getInt("DelNum", -1);     // default num is 0
+
+        if (lengthDel == -1 || lengthTag == -1) {
+            tags.add("news");
+            tags.add("paper");
+            tags.add("病毒研究");
+            tags.add("疫苗药物");
+            tags.add("疫情形势");
+            tags.add("患者治疗");
+        }
+        else {
+            for (int i = 0; i < lengthTag; i++) {
+                String tag = preferencesTag.getString("tag_"+i, null);
+                tags.add(tag);
+            }
+            for (int i = 0; i < lengthDel; i++) {
+                String delTag = preferencesTag.getString("deltag_"+i, null);
+                delTags.add(delTag);
+            }
+        }
+    }
 }

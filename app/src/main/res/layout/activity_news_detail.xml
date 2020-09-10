@@ -84,15 +84,15 @@
                 android:src="@drawable/ic_wechat"
                  />
 
-            <ImageButton
-                android:id="@+id/share_weibo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/bottomMarginSize"
-                android:background="#00000000"
-                android:onClick="onShareWeiboClick"
-                android:src="@drawable/ic_weibo"
-                android:contentDescription="weibo" />
+<!--            <ImageButton-->
+<!--                android:id="@+id/share_weibo"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="@dimen/bottomMarginSize"-->
+<!--                android:background="#00000000"-->
+<!--                android:onClick="onShareWeiboClick"-->
+<!--                android:src="@drawable/ic_weibo"-->
+<!--                android:contentDescription="weibo" />-->
 
         </LinearLayout>
 

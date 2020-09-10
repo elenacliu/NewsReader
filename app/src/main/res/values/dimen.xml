@@ -20,7 +20,7 @@
     <dimen name="newsListMarginSize">5dp</dimen>
     <dimen name="newsTitleMarginSize">10dp</dimen>
     <dimen name="newsDetailMarginSize">18dp</dimen>
-    <dimen name="bottomMarginSize">40dp</dimen>
+    <dimen name="bottomMarginSize">100dp</dimen>
     <dimen name="barchartHeight">350dp</dimen>
 
     <dimen name="dataviewHeight">30dp</dimen>
