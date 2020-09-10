@@ -45,4 +45,6 @@
     <color name="color_c">#ADBBDC</color>
     <color name="color_p">#A7C1BF</color>
 
+    <color name="barchart_bg">#ffffff</color>
+
 </resources>

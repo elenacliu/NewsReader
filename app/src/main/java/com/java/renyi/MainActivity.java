@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
     // 标签页数据和Fragment数据（暂定，按理要和TagSetting Activity做通信）
-    // TODO: 该数据得存入SharePreferences中
     private ArrayList<String> tags;
     private ArrayList<String> delTags;
 //    HashMap<String, TagFragment> hashMap = new HashMap<>();
@@ -158,13 +157,12 @@ public class MainActivity extends AppCompatActivity {
                         }
                         else
                             setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        Toast.makeText(MainActivity.this, "设置夜间模式需要重启软件", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "设置夜间模式需要重启软件", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, MainActivity.class);
                         // 小bug: 需要携带本页面的数据，比如tags & delTags
                         // 用户数据等等
 //                        intent.putExtra("tags", tags);
 //                        intent.putExtra("delTags", delTags);
-
                         startActivity(intent);
                         finish();
                     }
@@ -211,14 +209,17 @@ public class MainActivity extends AppCompatActivity {
                         else if (identifier == Constants.DATAVIEW_IDENTIFIER) {
                             Intent intent = new Intent(MainActivity.this, DataviewActivity.class);
                             startActivity(intent);
+                            drawer.setSelection(Constants.HOME_IDENTIFIER);
                         }
                         else if (identifier == Constants.GRAPHVIEW_IDENTIFIER) {
                             Intent intent = new Intent(MainActivity.this, EntitySearchActivity.class);
                             startActivity(intent);
+                            drawer.setSelection(Constants.HOME_IDENTIFIER);
                         }
                         else if (identifier == Constants.SCHOLAR_IDENTIFIER) {
                             Intent intent = new Intent(MainActivity.this, ScholarActivity.class);
                             startActivity(intent);
+                            drawer.setSelection(Constants.HOME_IDENTIFIER);
                         }
                         else if(identifier == Constants.HOME_IDENTIFIER) {
                             drawer.closeDrawer();
@@ -226,6 +227,12 @@ public class MainActivity extends AppCompatActivity {
                         else if(identifier == Constants.SEARCH_IDENTIFIER) {
                             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                             startActivity(intent);
+                            drawer.setSelection(Constants.HOME_IDENTIFIER);
+                        }
+                        else if(identifier == Constants.ABOUT_IDENTIFIER) {
+                            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                            startActivity(intent);
+                            drawer.setSelection(Constants.HOME_IDENTIFIER);
                         }
                         return false;
                     }

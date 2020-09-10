@@ -23,4 +23,6 @@
     <color name="news_item_unViewed">#ff000000</color>
     <color name="news_item_isViewed">#42000000</color>
     <color name="smart_refresh_bg">#42000000</color>
+
+    <color name="barchart_bg">#FFFFFF</color>
 </resources>

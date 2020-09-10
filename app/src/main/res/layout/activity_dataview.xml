@@ -43,6 +43,7 @@
                 </LinearLayout>
 
                 <com.github.mikephil.charting.charts.BarChart
+                    android:background="@color/barchart_bg"
                     android:id="@+id/chart_international"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/barchartHeight" />
