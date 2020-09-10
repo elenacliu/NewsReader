@@ -100,16 +100,16 @@ public class NewsDetailActivity extends AppCompatActivity implements IWXAPIEvent
 
 
         WXWebpageObject webpageObject = new WXWebpageObject();
-        String url = news.getUrls();
+        String url = "http://www.xinhuanet.com/english/2020-09/10/c_139356571.htm";
+        if (news.urls != null && news.urls.size() > 0)
+            url = news.urls.get(0);
 
         System.out.println("----------");
         Log.e("news url", url);
         System.out.println("----------");
 
-
-        if (url != null && !url.equals(""))
+        if (!url.equals(""))
             webpageObject.webpageUrl = url;
-        webpageObject.webpageUrl = "http://www.xinhuanet.com/english/2020-09/10/c_139356571.htm";
 
         WXMediaMessage msg = new WXMediaMessage(webpageObject);
         msg.title = news.title;

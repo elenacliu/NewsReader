@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // 初始化视图
         viewPager = findViewById(R.id.viewpager_news_list);
+        viewPager.setOffscreenPageLimit(7);
         tabLayout = findViewById(R.id.tab_news_list);
         // 初始化drawer
         AccountHeader accountHeader = new AccountHeaderBuilder()
