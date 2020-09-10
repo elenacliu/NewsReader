@@ -232,7 +232,7 @@ public class TagFragment extends BaseFragment {
         if (requestCode == Constants.UPDATE_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 assert data != null;
-                Log.e("requesting grey", (data.getStringExtra("title")));
+//                Log.e("requesting grey", (data.getStringExtra("title")));
                 mEntryViewModel.setViewed(data.getStringExtra("id"), currentTag);
             }
         }

@@ -30,9 +30,10 @@ public class SearchActivity extends AppCompatActivity {
 
     private Toolbar toolbar;    // 自定义顶部
     private RecyclerView recyclerView;
-    private NewsListAdapter newsListAdapter;
+    private SearchNewsListAdapter newsListAdapter;
     private List<Entry> newsEntityList;
     private EntryViewModel mEntryViewModel;
+    private String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class SearchActivity extends AppCompatActivity {
             SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
                     MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE);
             suggestions.saveRecentQuery(query, null);
+//            this.query = query;
             doMySearch(query);
         }
 
@@ -61,7 +63,7 @@ public class SearchActivity extends AppCompatActivity {
         // 获取recyclerview
         recyclerView = findViewById(R.id.recycler_view_search);
         // 创建adapter
-        newsListAdapter = new NewsListAdapter(SearchActivity.this);
+        newsListAdapter = new SearchNewsListAdapter(SearchActivity.this);
         newsListAdapter.setNewsEntityList(newsEntityList);
         // recyclerview与adapter绑定
         recyclerView.setAdapter(newsListAdapter);
@@ -79,12 +81,15 @@ public class SearchActivity extends AppCompatActivity {
         mEntryViewModel.getSearchResult().observe(this, nowSearchObserver);
 
         // 监听点击事件
-        newsListAdapter.setOnItemClickListener(new NewsListAdapter.OnItemClickListener() {
+        newsListAdapter.setOnItemClickListener(new SearchNewsListAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, Entry news) {
-                System.out.println(news);
+                System.out.println("------------------------");
+                Log.d("click", news.toString());
+                System.out.println("------------------------");
                 Intent intent = new Intent(SearchActivity.this, NewsDetailActivity.class);
                 intent.putExtra("news", news);
+                // 直接把值传进MainActivity ?
                 startActivityForResult(intent, Constants.UPDATE_REQUEST);
             }
         });
@@ -103,7 +108,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        newsListAdapter.notifyDataSetChanged();
+//        newsListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -114,6 +119,7 @@ public class SearchActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 assert data != null;
                 Log.e("requesting grey", (data.getStringExtra("title")));
+                // 更新后端
                 mEntryViewModel.setViewed(data.getStringExtra("id"), data.getStringExtra("type"));
             }
         }

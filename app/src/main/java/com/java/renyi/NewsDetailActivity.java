@@ -76,18 +76,6 @@ public class NewsDetailActivity extends AppCompatActivity implements IWXAPIEvent
     }
 
     public void onShareWechatClick(View v) {
-//        String description;
-//        if (news.content.length() > 30)
-//            description = news.content.substring(0,30);
-//        else
-//            description = news.content;
-//        ShareEntity shareEntity = new ShareEntity(news.title, description);
-//        String url = news.urls;
-//        if (!url.equals(""))
-//            shareEntity.setUrl(url);
-//
-//        ShareUtil.showShareDialog(this, ShareConstant.SHARE_CHANNEL_WEIXIN_FRIEND | ShareConstant.SHARE_CHANNEL_WEIXIN_CIRCLE
-//        , shareEntity, ShareConstant.REQUEST_CODE);
         WXWebpageObject webpageObject = new WXWebpageObject();
         String url = "http://www.xinhuanet.com/english/2020-09/10/c_139356571.htm";
         if (news.urls != null && news.urls.size() > 0)
