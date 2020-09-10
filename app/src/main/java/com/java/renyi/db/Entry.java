@@ -126,7 +126,7 @@ public class Entry implements Serializable {
         }
 
         // Use event-5-lts.model
-        Log.e("maxID = ", maxID+"");
+//        Log.e("maxID = ", maxID+"");
         if (maxID == 0)
             return "病毒研究";
         else if (maxID == 1)
