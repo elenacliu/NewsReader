@@ -44,6 +44,9 @@ class EntryRepository {
     private LiveData<List<Entry>> pandemicCluster;
     private LiveData<List<Entry>> treatmentCluster;
 
+    static private boolean newsFirstPageReady = false;
+    static private boolean paperFirstPageReady = false;
+
 
     static private  Application app;
     public static String lastNewsDate;
@@ -58,7 +61,7 @@ class EntryRepository {
     private static final int eventPageSize = 50;
 
     private static final int PAGE_SIZE = 100;
-    private static final int ADD_SIZE = 50;
+    private static final int ADD_SIZE = 10;
 
     static public MutableLiveData<List<Entry>> getCurrentNewsEntrys() {
         if (mNewsEntries == null) {
@@ -142,7 +145,6 @@ class EntryRepository {
                 Log.e("AddNews", "Offline");
             }
             Log.e("inInitCluster", "initing");
-//            cluster();
         });
 
         databaseWriteExecutor.execute(() -> {
@@ -155,15 +157,12 @@ class EntryRepository {
             } else {
                 Log.e("AddPaper", "Offline");
             }
-
-//            cluster();
-            
-
         });
 
         databaseWriteExecutor.execute(()->{
             // TODO: insert and parse 699 events in one shot is too slow, consider insert multiple times or use multiple thread to insert
-            insertEvents();
+            if (checkNetwork())
+                insertEvents();
         });
 
 
@@ -365,6 +364,11 @@ class EntryRepository {
 
     private static void getMoreNews() {
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
+        if (!newsFirstPageReady && nowNewsPage == 2) {  // for no net to with net, only scroll up
+            nowNewsPage = 1;
+            newsFirstPageReady = true;
+        }
+
         Entry[] newPageEntry = getEntries(url, nowNewsPage, PAGE_SIZE, "news", false);
         if (newPageEntry.length > 0) { // == 0 when getEntries Failed
             mEntryDao.insert(newPageEntry);
@@ -375,6 +379,11 @@ class EntryRepository {
 
     private static void getMorePaper() {
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
+        if (!paperFirstPageReady && nowPaperPage == 2) {
+            nowPaperPage = 1;
+            paperFirstPageReady = true;
+        }
+
         Entry[] newPageEntry = getEntries(url, nowPaperPage, PAGE_SIZE, "paper", false);
         if (newPageEntry.length > 0) { // == 0 when getEntries Failed
             mEntryDao.insert(newPageEntry);
@@ -385,6 +394,9 @@ class EntryRepository {
     static private void refreshNews(boolean replace) {
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
         Entry[] refreshed = getEntries(url, 1, PAGE_SIZE, "news", false);
+        if (refreshed.length > 0) {
+            newsFirstPageReady = true;
+        }
         if (replace) {
             mEntryDao.insert_replace(refreshed);
         } else {
@@ -399,6 +411,9 @@ class EntryRepository {
     static private void refreshPaper(boolean replace) {
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
         Entry[] refreshed = getEntries(url, 1, PAGE_SIZE, "paper", false);
+        if (refreshed.length > 0) {
+            paperFirstPageReady = true;
+        }
         if (replace) {
             mEntryDao.insert_replace(refreshed);
         } else {
@@ -449,11 +464,11 @@ class EntryRepository {
     }
 
     static private void addMoreNews(int offset) {
-        boolean gotMoreToDB = false;
         if (lastNewsDate == null) {
             Log.e("in date null", "it is null");
             lastNewsDate = getLatestDate();
         }
+
         newsLimitNumber += offset;
         Log.e("want more news", newsLimitNumber +"");
         List<Entry> update = mEntryDao.selectData("news", lastNewsDate, newsLimitNumber);
@@ -461,12 +476,12 @@ class EntryRepository {
         // TODO: CHANGE LOGIC HERE!
         if (update.size() < newsLimitNumber) {
             // TODO: first init no network?
-            if (update.size() != 0 ) {  // enter this branch when no data in db
+//            if (update.size() != 0 ) {  // enter this branch when no data in db
                 if (checkNetwork()) {
-                    gotMoreToDB = true;
                     getMoreNews();
                     update = mEntryDao.selectData("news", lastNewsDate, newsLimitNumber);
-                } else {
+                }
+                else {
                     Looper.prepare();
                     Toast toast = Toast.makeText(app, "You Do not Have Network When Getting More News", Toast.LENGTH_SHORT);
                     toast.show();
@@ -474,13 +489,11 @@ class EntryRepository {
 
                     Log.e("no net", "cannot getMore in news");
                 }
-            }
+//            }
         }
 
         Log.e("show size", update.size()+"");
         getCurrentNewsEntrys().postValue(update);
-//        if (gotMoreToDB)
-//            cluster();
     }
 
     static private void addMorePaper(int offset) {
@@ -490,9 +503,8 @@ class EntryRepository {
         paperLimitNumber += offset;
         List<Entry> update = mEntryDao.selectData("paper", lastPaperDate, paperLimitNumber);
         if (update.size() < paperLimitNumber) {
-            if (update.size() != 0) {
+//            if (update.size() != 0) {
                 if (checkNetwork()) {
-                    // TODO: from no net to with net, cannot get more
                     getMorePaper();
                     update = mEntryDao.selectData("paper", lastPaperDate, paperLimitNumber);
                 } else {
@@ -502,7 +514,7 @@ class EntryRepository {
                     Looper.loop();
                     Log.e("no net", "cannot getMore in paper");
                 }
-            }
+//            }
         }
         getCurrentPaperEntrys().postValue(update);
 //        cluster();
@@ -577,7 +589,15 @@ class EntryRepository {
 
     public void addMoreEvents() {
         databaseWriteExecutor.execute(()->{
-            insertEvents();
+            if (checkNetwork()) {
+                insertEvents();
+
+            }
+            else {
+                Looper.prepare();
+                Toast.makeText(app, "You Do not Have Network When Adding More Events", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
         });
     }
 

@@ -1,12 +1,8 @@
 ## 0909进度
 
-1. 变灰有bug
+1. 变灰有bug?
 
-2. 从cluster回来有bug，无法上拉更多
-
-3. 收藏吗？
-
-4. 聚类进一步完善！
+2. 从cluster回来有bug，无法上拉更多?
 
 5. Fragment Already Added Exception  多Fragment回收?
 
@@ -18,4 +14,8 @@
 
 7. 后端去掉toast
 
-8. 
+6. 夜间模式与开关匹配
+
+7. 加入Welcome Activity？
+
+8. 转圈时间太长?
