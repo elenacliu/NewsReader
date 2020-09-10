@@ -76,6 +76,10 @@ public class NewsDetailActivity extends AppCompatActivity implements IWXAPIEvent
     }
 
     public void onShareWechatClick(View v) {
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            Toast.makeText(this, "无网络连接，无法分享", Toast.LENGTH_SHORT).show();
+            return;
+        }
         WXWebpageObject webpageObject = new WXWebpageObject();
         String url = "http://www.xinhuanet.com/english/2020-09/10/c_139356571.htm";
         if (news.urls != null && news.urls.size() > 0)
