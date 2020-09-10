@@ -20,7 +20,6 @@ import java.util.List;
  */
 // 参考：https://www.jianshu.com/p/368ac961808d
 // 参考：https://blog.csdn.net/zhuchenglin830/article/details/82286109
-
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHolder> {
     private Context context;
     private List<Entry> newsEntityList;

@@ -229,7 +229,7 @@ public class TagFragment extends BaseFragment {
         // 请求变灰
         if (requestCode == Constants.UPDATE_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                assert data != null;
+//                assert data != null;
                 mEntryViewModel.setViewed(data.getStringExtra("id"), currentTag);
             }
         }
