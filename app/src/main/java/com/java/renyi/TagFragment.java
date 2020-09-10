@@ -75,7 +75,7 @@ public class TagFragment extends BaseFragment {
 
         if (currentTag.equals("paper")) {
             final Observer<List<Entry>> nowPaperEntryObserver = entries -> {
-                Log.e("onChanged", entries.size()+"");
+                Log.e("PaperToFront", entries.size()+"");
                 // TODO: Print entries, when content is null
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
@@ -85,12 +85,20 @@ public class TagFragment extends BaseFragment {
                     }
                 }
                 newsListAdapter.setNewsEntityList(entries);
+                Log.e("PaperToFrontFinal", entries.size()+"");
             };
             mEntryViewModel.getCurrentPaperEntrys().observe(this, nowPaperEntryObserver);
         }
         else if (currentTag.equals("news")) {
             final Observer<List<Entry>> nowNewsEntryObserver = entries -> {
-                Log.e("onChanged", entries.size()+"");
+                Log.e("NewsToFront: ", entries.size()+"");
+                if (entries.size() > 0) {
+                    Entry now = entries.get(0);
+                    for (int i = 0;i < now.urls.size(); i++) {
+                        Log.e("url"+i, now.urls.get(i));
+                    }
+                }
+
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
@@ -99,17 +107,29 @@ public class TagFragment extends BaseFragment {
                     }
                 }
                 newsListAdapter.setNewsEntityList(entries);
+                Log.e("NewsToFrontFinal", entries.size()+"");
             };
             mEntryViewModel.getCurrentNewsEntrys().observe(this, nowNewsEntryObserver);
         }
-        else if (currentTag.equals("cluster")) {
-            mEntryViewModel.getGlobalCluster().observe(this, entries -> {
-                Log.e("globalCluster ", entries.size()+"");
+
+        else if (currentTag.equals("病毒研究")) {
+            mEntryViewModel.getResearchCluster().observe(this, entries -> {
+                Iterator<Entry> iterator = entries.iterator();
+                while (iterator.hasNext()) {
+                    Entry entry = iterator.next();
+                    if (entry.content == null) {
+                        iterator.remove();
+                    }
+                }
+
+                newsListAdapter.setNewsEntityList(entries);
+                Log.e("researchCluster ", entries.size()+"");
             });
-            mEntryViewModel.getDomesticCluster().observe(this, entries -> {
-                Log.e("domesticCluster ", entries.size()+"");
-            });
-            mEntryViewModel.getEconomyCluster().observe(this, entries -> {
+        }
+
+        else if (currentTag.equals("疫苗药物")) {
+            mEntryViewModel.getMedicineCluster().observe(this, entries -> {
+
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
@@ -118,9 +138,35 @@ public class TagFragment extends BaseFragment {
                     }
                 }
                 newsListAdapter.setNewsEntityList(entries);
-                Log.e("economyCluster ", entries.size()+"");
+                Log.e("medicineCluster ", entries.size()+"");
             });
+        }
 
+        else if (currentTag.equals("疫情形势")) {
+            mEntryViewModel.getPandemicCluster().observe(this, entries -> {
+                Iterator<Entry> iterator = entries.iterator();
+                while (iterator.hasNext()) {
+                    Entry entry = iterator.next();
+                    if (entry.content == null) {
+                        iterator.remove();
+                    }
+                }
+                newsListAdapter.setNewsEntityList(entries);
+                Log.e("pandemicCluster ", entries.size()+"");
+            });
+        }
+        else if (currentTag.equals("患者治疗")) {
+            mEntryViewModel.getTreatmentCluster().observe(this, entries -> {
+                Iterator<Entry> iterator = entries.iterator();
+                while (iterator.hasNext()) {
+                    Entry entry = iterator.next();
+                    if (entry.content == null) {
+                        iterator.remove();
+                    }
+                }
+                newsListAdapter.setNewsEntityList(entries);
+                Log.e("treatmentCluster", entries.size()+"");
+            });
         }
 
         // 监听点击事件
@@ -169,6 +215,8 @@ public class TagFragment extends BaseFragment {
                 }
                 else if (currentTag.equals("news")) {
                     mEntryViewModel.addMoreNews();
+                } else if (currentTag.equals("病毒研究") || currentTag.equals("疫苗药物") || currentTag.equals("疫情形势") || currentTag.equals("患者治疗")) {
+                    mEntryViewModel.addMoreEvents();
                 }
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }

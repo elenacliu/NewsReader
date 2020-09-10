@@ -7,12 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Entry.class}, version = 1, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class EntryRoomDatabase extends RoomDatabase {
     public abstract EntryDao entryDao();
     private static volatile EntryRoomDatabase INSTANCE;
@@ -30,7 +32,6 @@ public abstract class EntryRoomDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             EntryRoomDatabase.class, "entry_database")
                             .build();
-                    // TODO: CALL BACK?
                 }
             }
         }

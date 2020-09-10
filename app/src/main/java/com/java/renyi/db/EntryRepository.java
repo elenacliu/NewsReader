@@ -42,10 +42,10 @@ class EntryRepository {
     static private MutableLiveData<List<Scholar>> livingScholar;
     static private MutableLiveData<List<Scholar>> passedAwayScholar;
 
-
-    private LiveData<List<Entry>> globalCluster;
-    private LiveData<List<Entry>> domesticCluster;
-    private LiveData<List<Entry>> economyCluster;
+    private LiveData<List<Entry>> researchCluster;
+    private LiveData<List<Entry>> medicineCluster;
+    private LiveData<List<Entry>> pandemicCluster;
+    private LiveData<List<Entry>> treatmentCluster;
 
 
     static private  Application app;
@@ -57,9 +57,11 @@ class EntryRepository {
 
     private static int nowNewsPage = 2;
     private  static int nowPaperPage = 2;
+    private static int nowEventPage = 1;
+    private static final int eventPageSize = 50;
 
     private static final int PAGE_SIZE = 100;
-    private static final int ADD_SIZE = 10;
+    private static final int ADD_SIZE = 50;
 
     static public MutableLiveData<List<Entry>> getCurrentNewsEntrys() {
         if (mNewsEntries == null) {
@@ -118,14 +120,16 @@ class EntryRepository {
     }
 
     EntryRepository(Application application) {
+        Log.e("entering repo init", "initingRepo");
         app = application;
         Log.e("before db", "Before");
         EntryRoomDatabase db = EntryRoomDatabase.getDatabase(application);
         Log.e("after db", "Before");
         mEntryDao = db.entryDao();
-        globalCluster = mEntryDao.getGlobalCluster();
-        domesticCluster = mEntryDao.getDomesticCluster();
-        economyCluster = mEntryDao.getEconomyCluster();
+        researchCluster = mEntryDao.getResearchCluster();
+        medicineCluster = mEntryDao.getMedicineCluster();
+        pandemicCluster = mEntryDao.getPandemicCluster();
+        treatmentCluster = mEntryDao.getTreatmentCluster();
 
         databaseWriteExecutor.execute(() -> {
             // TODO : if first init no net, no get
@@ -140,6 +144,7 @@ class EntryRepository {
                 Looper.loop();
                 Log.e("AddNews", "Offline");
             }
+            Log.e("inInitCluster", "initing");
 //            cluster();
         });
 
@@ -156,28 +161,34 @@ class EntryRepository {
 
 //            cluster();
             
-            // TODO: insert and parse 699 events in one shot is too slow, consider insert multiple times or use multiple thread to insert
-//            insertEvents();
+
         });
-
-
 
         databaseWriteExecutor.execute(()->{
-            // initialization for
-            Log.e("InitSplit", getTimeMilli());
-            List<Term> terms = ToAnalysis.parse("今天阳光普照，万物生辉。刘畅的白色衬衫很好看。").getTerms();
-            Log.e("SplitComplete", terms.toString());
-            Log.e("SplitComplete", getTimeMilli());
-            Log.e("AnthoerSplit", ToAnalysis.parse("今天阳光普照，万物生辉。").getTerms().toString());
-            Log.e("AnotherSplitComplete", getTimeMilli());
+            // TODO: insert and parse 699 events in one shot is too slow, consider insert multiple times or use multiple thread to insert
+            insertEvents();
         });
+
+
+
+//        databaseWriteExecutor.execute(()->{
+//            // initialization for
+//            Log.e("InitSplit", getTimeMilli());
+//            List<Term> terms = ToAnalysis.parse("今天阳光普照，万物生辉。刘畅的白色衬衫很好看。").getTerms();
+//            Log.e("SplitComplete", terms.toString());
+//            Log.e("SplitComplete", getTimeMilli());
+//            Log.e("AnthoerSplit", ToAnalysis.parse("今天阳光普照，万物生辉。").getTerms().toString());
+//            Log.e("AnotherSplitComplete", getTimeMilli());
+//        });
 
         databaseWriteExecutor.execute(()->{
             synchronized (lockInt) {
                 AssetManager assetManager = app.getAssets();
                 Log.e("begin getting LDA", "getting LDA" + getTimeMilli());
                 try {
-                    hanLDA = new LDAModel(assetManager.open("mylda5141-3.model"));
+//                    hanLDA = new LDAModel(assetManager.open("mylda5141-3.model"));
+                    hanLDA = new LDAModel(assetManager.open("event-5.model"));
+
 //                    hanLDA = new LDAModel(assetManager.open("myldaAll-4.model"));
                 } catch (IOException e) {
                     Log.e("repoInit","LoadModelFailed");
@@ -309,12 +320,12 @@ class EntryRepository {
     }
 
 
-    LiveData<List<Entry>> getGlobalCluster() {return globalCluster;}
-    LiveData<List<Entry>> getDomesticCluster() {return domesticCluster;}
-    LiveData<List<Entry>> getEconomyCluster() {return economyCluster;}
+    LiveData<List<Entry>> getResearchCluster() {return researchCluster;}
+    LiveData<List<Entry>> getMedicineCluster() {return medicineCluster;}
+    LiveData<List<Entry>> getPandemicCluster() {return pandemicCluster;}
+    LiveData<List<Entry>> getTreatmentCluster() { return treatmentCluster; }
 
-
-    private static String getTimeMilli() {
+    public  static String getTimeMilli() {
         Calendar Cld = Calendar.getInstance();
         int YY = Cld.get(Calendar.YEAR) ;
         int MM = Cld.get(Calendar.MONTH)+1;
@@ -332,11 +343,9 @@ class EntryRepository {
         Log.e("after get HTML", "in getEntries");
         try {  // when no net, getJSONArray is on a null Object, which is error
             JSONArray jsonarr = JSON.parseObject(result).getJSONArray("data");
-
             Log.e("beginParsing", "begin"+getTimeMilli());
             List<Entry> list = EntryRepository.parseJSONArray(type, jsonarr, getClusterImmediate);
             Log.e("afterParsing", "after"+getTimeMilli());
-
             return list.toArray(new Entry[list.size()]);
         } catch (Exception e) {
             Log.e("in getEntries error", e.toString());
@@ -346,11 +355,13 @@ class EntryRepository {
     }
 
     private static void insertEvents() {
+        Log.e("begin InsertEvents", getTimeMilli());
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
-        Entry[] newPageEntry = getEntries(url, 1, 700, "event", true);
+        Entry[] newPageEntry = getEntries(url, nowEventPage, eventPageSize, "event", true);
         if (newPageEntry.length > 0) { // == 0 when getEntries Failed
             mEntryDao.insert(newPageEntry);
-            Log.e("insertEvents!", newPageEntry.length+"");
+            Log.e("insertEvents!", getTimeMilli());
+            nowEventPage += 1;
         }
     }
 
@@ -373,8 +384,6 @@ class EntryRepository {
         }
     }
 
-
-
     static private void refreshNews(boolean replace) {
         String url = "https://covid-dashboard.aminer.cn/api/events/list";
         Entry[] refreshed = getEntries(url, 1, PAGE_SIZE, "news", false);
@@ -383,6 +392,7 @@ class EntryRepository {
         } else {
             mEntryDao.insert(refreshed);
         }
+
         lastNewsDate = null;
         newsLimitNumber = 0;
         addMoreNews(ADD_SIZE);
@@ -430,8 +440,6 @@ class EntryRepository {
         });
     }
 
-
-
     // return the list of entry based on the given JSONArray
     private static List<Entry> parseJSONArray(String type, JSONArray j, boolean getClusterImmediate) {
         List<Entry> res = new ArrayList<>();
@@ -442,8 +450,8 @@ class EntryRepository {
         return res;
     }
 
-
     static private void addMoreNews(int offset) {
+        boolean gotMoreToDB = false;
         if (lastNewsDate == null) {
             Log.e("in date null", "it is null");
             lastNewsDate = getLatestDate();
@@ -457,6 +465,7 @@ class EntryRepository {
             // TODO: first init no network?
             if (update.size() != 0 ) {  // enter this branch when no data in db
                 if (checkNetwork()) {
+                    gotMoreToDB = true;
                     getMoreNews();
                     update = mEntryDao.selectData("news", lastNewsDate, newsLimitNumber);
                 } else {
@@ -472,7 +481,8 @@ class EntryRepository {
 
         Log.e("show size", update.size()+"");
         getCurrentNewsEntrys().postValue(update);
-//        cluster();
+//        if (gotMoreToDB)
+//            cluster();
     }
 
     static private void addMorePaper(int offset) {
@@ -566,4 +576,12 @@ class EntryRepository {
         JSONArray dataArr = jsonobject.getJSONObject(key).getJSONArray("data");
         return dataArr.get(dataArr.size()- 1).toString();
     }
+
+    public void addMoreEvents() {
+        databaseWriteExecutor.execute(()->{
+            insertEvents();
+        });
+    }
+
+
 }

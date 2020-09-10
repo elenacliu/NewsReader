@@ -254,7 +254,11 @@ public class MainActivity extends AppCompatActivity {
     private void setTagList() {
         tags.add("news");
         tags.add("paper");
-        tags.add("cluster");
+        tags.add("病毒研究");
+        tags.add("疫苗药物");
+        tags.add("疫情形势");
+        tags.add("患者治疗");
+
 //        tags.add("推荐");
 //        tags.add("科技");
 //        tags.add("军事");

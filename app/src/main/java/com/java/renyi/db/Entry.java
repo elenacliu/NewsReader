@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+
 import com.alibaba.fastjson.*;
 import com.java.renyi.LDA.me.xiaosheng.lda.HanLDA;
 
@@ -12,10 +14,13 @@ import org.ansj.domain.Term;
 import org.ansj.splitWord.analysis.ToAnalysis;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 
 @Entity(tableName = "entry_table")
@@ -28,20 +33,19 @@ public class Entry implements Serializable {
     public String source;
     public String time;
     public String type;
+    public String seg_text;
     public boolean viewed = false;
     public String category;
-    public String urls;
+    public List<String> urls;
     public String cluster;
     public Entry(String _id) { this._id = _id;}
 
-    public String getUrls() {
-        return urls;
-    }
 
     public Entry(String type, JSONObject json, boolean getClusterImmediate) {
         _id = json.getString("_id");
         title = json.getString("title");
         content = json.getString("content");
+        seg_text = json.getString("seg_text");
         // source needs special treatment in paper and events
         if ("news".equals(type)) {
             source = json.getString("source");
@@ -52,17 +56,21 @@ public class Entry implements Serializable {
         this.type = json.getString("type");
 
         if (getClusterImmediate)
-            cluster = getCluster(title, content);
+            cluster = getCluster();
         else
             cluster = "";
-
         viewed = false;
         category = json.getString("category");
-        urls = json.getString("urls");
+        JSONArray urlArr = json.getJSONArray("urls");
+        int urlArrLength = urlArr.size();
+        urls = new ArrayList<>();
+        for (int i = 0; i < urlArrLength; i++) {
+            urls.add(urlArr.getString(0));
+        }
     }
 
     public void modifyCluster() {
-        cluster = getCluster(title, content);
+        cluster = getCluster();
     }
 
     private static boolean isChinese(String str){
@@ -71,8 +79,17 @@ public class Entry implements Serializable {
         Matcher m = p.matcher(str);
         return m.find();
     }
+
+    static int splitCnt = 0;
     private String getSplit(String s) {
+        if (splitCnt < 3 ) {
+            Log.e("splitStart"+splitCnt, EntryRepository.getTimeMilli());
+        }
         List<Term> terms = ToAnalysis.parse(s).getTerms();
+        if (splitCnt < 3 ) {
+            Log.e("splitFinish"+splitCnt, EntryRepository.getTimeMilli());
+        }
+        splitCnt+=1;
         StringBuffer result = new StringBuffer("");
         for (Term t: terms) {
             result.append(" ".concat(t.getName()));
@@ -86,10 +103,13 @@ public class Entry implements Serializable {
 //            Log.e("notChinese", s);
             return s;
         }
+//        return s.seg_text;
         return getSplit(s);
     }
-    private String getCluster(String title, String content) {
-        String result = split(title.concat(" ").concat(content));
+    private String getCluster() {
+        String result = seg_text;
+        if (result == null)
+            return "";
         double [] topicDistribution = HanLDA.inferenceFromString(EntryRepository.getHDA(), result,false);
         return getMaxTopic(topicDistribution);
     }
@@ -105,13 +125,18 @@ public class Entry implements Serializable {
             }
         }
 
-        // Use mylda5141-3.model
+        // Use event-5-lts.model
+//        Log.e("maxID = ", maxID+"");
         if (maxID == 0)
-            return "国际疫情";
+            return "病毒研究";
         else if (maxID == 1)
-            return "国内资讯";
+            return "疫情形势";
         else if (maxID == 2)
-            return "经济发展";
+            return "病毒研究";
+        else if (maxID == 3)
+            return "疫苗药物";
+        else if (maxID == 4)
+            return "患者治疗";
         return "topic" + maxID;
     }
 
@@ -187,3 +212,4 @@ public class Entry implements Serializable {
         return ret;
     }
 }
+

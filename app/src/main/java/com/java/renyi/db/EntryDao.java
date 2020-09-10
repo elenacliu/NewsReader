@@ -17,15 +17,17 @@ public interface EntryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Entry... entry);
 
-    @Query("SELECT * from entry_table WHERE cluster == \"国际疫情\" ORDER BY time DESC")
-    LiveData<List<Entry>> getGlobalCluster();
+    @Query("SELECT * from entry_table WHERE cluster == \"病毒研究\"")
+    LiveData<List<Entry>> getResearchCluster();
 
-    @Query("SELECT * from entry_table WHERE cluster == \"国内资讯\" ORDER BY time DESC")
-    LiveData<List<Entry>> getDomesticCluster();
+    @Query("SELECT * from entry_table WHERE cluster == \"疫苗药物\"")
+    LiveData<List<Entry>> getMedicineCluster();
 
-    @Query("SELECT * from entry_table WHERE cluster == \"经济发展\" ORDER BY time DESC")
-    LiveData<List<Entry>> getEconomyCluster();
+    @Query("SELECT * from entry_table WHERE cluster == \"疫情形势\"")
+    LiveData<List<Entry>> getPandemicCluster();
 
+    @Query("SELECT * from entry_table WHERE cluster == \"患者治疗\" ")
+    LiveData<List<Entry>> getTreatmentCluster();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert_replace(Entry... entry);
