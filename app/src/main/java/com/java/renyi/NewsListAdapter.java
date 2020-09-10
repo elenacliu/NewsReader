@@ -2,6 +2,7 @@ package com.java.renyi;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,16 +42,28 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Entry news = newsEntityList.get(position);
 
-        holder.title.setText(news.title);
-        holder.content.setText(news.content);
-        holder.time.setText(news.time);
-        holder.source.setText(news.source);
+
+
         // 如果该新闻被看过
         if (news.viewed) {
+            holder.title.setText(news.viewed + news.title);
+            holder.content.setText(news.content);
+            holder.time.setText(news.time);
+            holder.source.setText(news.source);
             holder.title.setTextColor(context.getColor(R.color.news_item_isViewed));
             holder.content.setTextColor(context.getColor(R.color.news_item_isViewed));
             holder.time.setTextColor(context.getColor(R.color.news_item_isViewed));
             holder.source.setTextColor(context.getColor(R.color.news_item_isViewed));
+        }
+        else {
+            holder.title.setText(news.viewed + news.title);
+            holder.content.setText(news.content);
+            holder.time.setText(news.time);
+            holder.source.setText(news.source);
+            holder.title.setTextColor(context.getColor(R.color.news_item_unViewed));
+            holder.content.setTextColor(context.getColor(R.color.news_item_unViewed));
+            holder.time.setTextColor(context.getColor(R.color.news_item_unViewed));
+            holder.source.setTextColor(context.getColor(R.color.news_item_unViewed));
         }
     }
 

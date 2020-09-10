@@ -24,6 +24,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -231,6 +232,7 @@ public class TagFragment extends BaseFragment {
         if (requestCode == Constants.UPDATE_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 assert data != null;
+                Log.e("requesting grey", (data.getStringExtra("title")));
                 mEntryViewModel.setViewed(data.getStringExtra("id"), currentTag);
             }
         }

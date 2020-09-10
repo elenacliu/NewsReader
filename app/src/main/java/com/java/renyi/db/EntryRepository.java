@@ -21,9 +21,6 @@ import java.util.Set;
 import com.java.renyi.LDA.me.xiaosheng.lda.LDAModel;
 import com.java.renyi.LDA.me.xiaosheng.lda.HanLDA;
 
-import org.ansj.domain.Term;
-import org.ansj.splitWord.analysis.ToAnalysis;
-
 import static com.java.renyi.db.EntryRoomDatabase.databaseWriteExecutor;
 import static com.java.renyi.db.GetHTML.getHTML;
 
@@ -238,6 +235,7 @@ class EntryRepository {
             }
         });
     }
+
     public void search(String target) {
         databaseWriteExecutor.execute(() -> {
             mSearchResult.postValue(mEntryDao.search("%"+target+"%"));

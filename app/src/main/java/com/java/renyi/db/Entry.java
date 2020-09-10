@@ -9,10 +9,6 @@ import androidx.room.TypeConverter;
 
 import com.alibaba.fastjson.*;
 import com.java.renyi.LDA.me.xiaosheng.lda.HanLDA;
-
-import org.ansj.domain.Term;
-import org.ansj.splitWord.analysis.ToAnalysis;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +35,6 @@ public class Entry implements Serializable {
     public List<String> urls;
     public String cluster;
     public Entry(String _id) { this._id = _id;}
-
 
     public Entry(String type, JSONObject json, boolean getClusterImmediate) {
         _id = json.getString("_id");
@@ -80,32 +75,8 @@ public class Entry implements Serializable {
         return m.find();
     }
 
-    static int splitCnt = 0;
-    private String getSplit(String s) {
-        if (splitCnt < 3 ) {
-            Log.e("splitStart"+splitCnt, EntryRepository.getTimeMilli());
-        }
-        List<Term> terms = ToAnalysis.parse(s).getTerms();
-        if (splitCnt < 3 ) {
-            Log.e("splitFinish"+splitCnt, EntryRepository.getTimeMilli());
-        }
-        splitCnt+=1;
-        StringBuffer result = new StringBuffer("");
-        for (Term t: terms) {
-            result.append(" ".concat(t.getName()));
-        }
-//        Log.e("isChinese", result.toString());
-        return result.toString().trim();
-    }
 
-    private String split(String s) {
-        if (!isChinese(s)) {
-//            Log.e("notChinese", s);
-            return s;
-        }
-//        return s.seg_text;
-        return getSplit(s);
-    }
+
     private String getCluster() {
         String result = seg_text;
         if (result == null)
