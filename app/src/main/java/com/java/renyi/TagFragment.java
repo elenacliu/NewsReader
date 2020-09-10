@@ -131,7 +131,6 @@ public class TagFragment extends BaseFragment {
             mEntryViewModel.getMedicineCluster().observe(this, entries -> {
                 Iterator<Entry> iterator = entries.iterator();
                 Log.e("medicineClusterBefore ", entries.size()+"");
-
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
                     if (entry.content == null) {
