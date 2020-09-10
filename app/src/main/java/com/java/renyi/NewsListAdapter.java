@@ -45,7 +45,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
 
         // 如果该新闻被看过
         if (news.viewed) {
-            holder.title.setText(news.viewed + news.title);
+            holder.title.setText(news.title);
             holder.content.setText(news.content);
             holder.time.setText(news.time);
             holder.source.setText(news.source);
@@ -55,7 +55,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.ViewHo
             holder.source.setTextColor(context.getColor(R.color.news_item_isViewed));
         }
         else {
-            holder.title.setText(news.viewed + news.title);
+            holder.title.setText(news.title);
             holder.content.setText(news.content);
             holder.time.setText(news.time);
             holder.source.setText(news.source);
