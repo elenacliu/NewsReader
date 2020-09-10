@@ -147,7 +147,10 @@ public class Entry implements Serializable {
         for (int i = 0; i < length; i++) {
             if (i != 0)
                 authors.append(" ,");
-            authors.append(((JSONObject)(jarr.get(i))).getString("name"));
+            String currentAuthor = ((JSONObject)(jarr.get(i))).getString("name");
+            if (currentAuthor == null)
+                currentAuthor = ((JSONObject)(jarr.get(i))).getString("name_zh");
+            authors.append(currentAuthor);
         }
         return authors.toString();
     }

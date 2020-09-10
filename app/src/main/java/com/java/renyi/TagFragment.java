@@ -129,11 +129,11 @@ public class TagFragment extends BaseFragment {
 
         else if (currentTag.equals("疫苗药物")) {
             mEntryViewModel.getMedicineCluster().observe(this, entries -> {
-
                 Iterator<Entry> iterator = entries.iterator();
+                Log.e("medicineClusterBefore ", entries.size()+"");
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
-                    if (entry.content == null || entry.content.equals("")) {
+                    if (entry.content == null) {
                         iterator.remove();
                     }
                 }
@@ -155,6 +155,7 @@ public class TagFragment extends BaseFragment {
                 Log.e("pandemicCluster ", entries.size()+"");
             });
         }
+
         else if (currentTag.equals("患者治疗")) {
             mEntryViewModel.getTreatmentCluster().observe(this, entries -> {
                 Iterator<Entry> iterator = entries.iterator();
