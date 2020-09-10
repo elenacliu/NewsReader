@@ -65,36 +65,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/linear_layout_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/linear_layout_1">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/newsDetailMarginSize"
-                        android:layout_marginLeft="@dimen/newsDetailMarginSize"
-                        android:text="Graph Schema"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/titleSize" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/newsDetailMarginSize"
-                        android:layout_marginLeft="@dimen/newsDetailMarginSize"
-                        android:layout_marginRight="@dimen/newsDetailMarginSize"
-                        android:text="@string/search_entity_credit"/>
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/canvas"/>
-
-                </LinearLayout>
 
 
             </RelativeLayout>

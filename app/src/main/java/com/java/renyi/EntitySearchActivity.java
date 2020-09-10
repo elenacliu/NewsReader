@@ -156,10 +156,12 @@ public class EntitySearchActivity extends AppCompatActivity {
             parent.addChild(child);
             // 判断孙子节点是否都有内容
             boolean hasRelation = false;
+            int cnt = 0;        // 统计非空的relation项数
             for (HashMap<String, String> hashMap: hashMapList) {
                 // 实际上，取hashmap的第一项即可, 因为一定是一致的
-                if (hashMap.get("forward") != null) {
+                if (hashMap.get("forward") != null && cnt <= 20) {
                     hasRelation = true;
+                    cnt++;
                     TreeNode grandchild = new TreeNode(hashMap);
                     grandchild.setLevel(2);
                     System.out.println("----------");

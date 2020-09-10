@@ -66,7 +66,12 @@ public class ScholarListAdapter extends RecyclerView.Adapter<ScholarListAdapter.
             holder.tvName.setText(scholar.getName());
         }
         holder.tvPosition.setText(scholar.getProfile().get("position"));
-        holder.tvAffiliation.setText(scholar.getProfile().get("affiliation"));
+
+        if (scholar.getName_zh().equals("李文亮")) {
+            holder.tvPosition.setText("武汉市中心医院医生");
+        }
+
+       holder.tvAffiliation.setText(scholar.getProfile().get("affiliation"));
 
         DecimalFormat decimalFormat=new DecimalFormat("#.00");
 

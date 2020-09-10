@@ -27,7 +27,7 @@ public class ThirdLevelNodeViewBinder extends BaseNodeViewBinder {
     private TextView tv_intro;
     private ImageView iv_img;
 
-    private TextView tv_relation_type, tv_relation_entity;
+    private TextView tv_relation_type, tv_relation_entity, tv_holder;
     private ImageView iv_relation;
 
     private TextView tv_property_name, tv_property_content;
@@ -43,6 +43,7 @@ public class ThirdLevelNodeViewBinder extends BaseNodeViewBinder {
         tv_relation_type = itemView.findViewById(R.id.tv_relation_type);
         tv_relation_entity = itemView.findViewById(R.id.tv_relation_entity);
         iv_relation = itemView.findViewById(R.id.iv_relation);          // set src
+        tv_holder = itemView.findViewById(R.id.tv_placeholder);
 
         tv_property_name = itemView.findViewById(R.id.tv_property_name);
         tv_property_content = itemView.findViewById(R.id.tv_property_content);
@@ -74,14 +75,16 @@ public class ThirdLevelNodeViewBinder extends BaseNodeViewBinder {
                     tv_intro.setText(intro);
 
                 String img = (String) ((List)value).get(1);
-                if (img != null) {
+                if (img != null && !img.equals("")) {
                     // 有就显示
+                    iv_img.setVisibility(View.VISIBLE);
+                    tv_holder.setVisibility(View.VISIBLE);
                     Glide.with(iv_img.getContext()).load(img).into(iv_img);
                 }
-                else {
-                    // 没有就不显示
-                    iv_img.setVisibility(View.GONE);
-                }
+//                else {
+//                    // 没有就不显示
+//                    iv_img.setVisibility(View.GONE);
+//                }
             }
             // 手动添加第三个元素
             else {
