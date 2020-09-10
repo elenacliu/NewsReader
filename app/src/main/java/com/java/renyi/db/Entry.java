@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+
 import com.alibaba.fastjson.*;
 import com.java.renyi.LDA.me.xiaosheng.lda.HanLDA;
 
@@ -12,10 +14,13 @@ import org.ansj.domain.Term;
 import org.ansj.splitWord.analysis.ToAnalysis;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 
 @Entity(tableName = "entry_table")
@@ -31,7 +36,7 @@ public class Entry implements Serializable {
     public String seg_text;
     public boolean viewed = false;
     public String category;
-    public String urls;
+    public List<String> urls;
     public String cluster;
     public Entry(String _id) { this._id = _id;}
 
@@ -56,7 +61,12 @@ public class Entry implements Serializable {
             cluster = "";
         viewed = false;
         category = json.getString("category");
-        urls = json.getString("urls");
+        JSONArray urlArr = json.getJSONArray("urls");
+        int urlArrLength = urlArr.size();
+        urls = new ArrayList<>();
+        for (int i = 0; i < urlArrLength; i++) {
+            urls.add(urlArr.getString(0));
+        }
     }
 
     public void modifyCluster() {
@@ -116,7 +126,7 @@ public class Entry implements Serializable {
         }
 
         // Use event-5-lts.model
-        Log.e("maxID = ", maxID+"");
+//        Log.e("maxID = ", maxID+"");
         if (maxID == 0)
             return "病毒研究";
         else if (maxID == 1)
@@ -202,3 +212,4 @@ public class Entry implements Serializable {
         return ret;
     }
 }
+

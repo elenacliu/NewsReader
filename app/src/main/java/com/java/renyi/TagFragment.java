@@ -92,6 +92,13 @@ public class TagFragment extends BaseFragment {
         else if (currentTag.equals("news")) {
             final Observer<List<Entry>> nowNewsEntryObserver = entries -> {
                 Log.e("NewsToFront: ", entries.size()+"");
+                if (entries.size() > 0) {
+                    Entry now = entries.get(0);
+                    for (int i = 0;i < now.urls.size(); i++) {
+                        Log.e("url"+i, now.urls.get(i));
+                    }
+                }
+
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
@@ -121,6 +128,7 @@ public class TagFragment extends BaseFragment {
 
         else if (currentTag.equals("疫苗药物")) {
             mEntryViewModel.getMedicineCluster().observe(this, entries -> {
+
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
