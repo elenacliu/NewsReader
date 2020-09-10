@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 new PrimaryDrawerItem().withName("首   页").withIcon(GoogleMaterial.Icon.gmd_home).withIdentifier(Constants.HOME_IDENTIFIER),
                 itemDataView,
                 itemGraphView,
-                itemCluster,
+//                itemCluster,
                 itemScholar,
 //                itemDebugSearch,
 //        new PrimaryDrawerItem().withName("我的收藏").withIcon(GoogleMaterial.Icon.gmd_favorite).withIdentifier(Constants.FAVORITE_IDENTIFIER),
@@ -214,9 +214,6 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, EntitySearchActivity.class);
                             startActivity(intent);
                         }
-                        else if (identifier == Constants.CLUSTER_IDENTIFIER) {
-
-                        }
                         else if (identifier == Constants.SCHOLAR_IDENTIFIER) {
                             Intent intent = new Intent(MainActivity.this, ScholarActivity.class);
                             startActivity(intent);
@@ -232,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
         .build();
-//        drawer.addStickyFooterItem(new PrimaryDrawerItem().withName("StickyFooterItem"));
     }
 
 
@@ -259,17 +255,6 @@ public class MainActivity extends AppCompatActivity {
         tags.add("疫苗药物");
         tags.add("疫情形势");
         tags.add("患者治疗");
-
-//        tags.add("推荐");
-//        tags.add("科技");
-//        tags.add("军事");
-//        tags.add("政治");
-//        tags.add("要闻");
-//        tags.add("体育");
-//        tags.add("教育");
-//        tags.add("民生");
-//        tags.add("娱乐");
-//        tags.add("其他");
     }
 
     // 初始化菜单栏，用Java代码创建SearchView (activity_main.xml中没有显式写入)
