@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--国内疫情数据项-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_region"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dataviewHeight"
+        android:layout_weight="3"
+        android:text="地区"
+        android:textColor="@color/datatext_region"
+        android:gravity="center"
+        android:textSize="@dimen/textSize"
+        android:background="@color/dataview_region"
+        android:elevation="1dp"/>
+
+    <TextView
+        android:id="@+id/tv_confirmed"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dataviewHeight"
+        android:layout_weight="2"
+        android:text="确诊数"
+        android:textColor="@color/datatext_confirmed"
+        android:gravity="center"
+        android:textSize="@dimen/textSize"
+        android:background="@color/dataview_confirmed"
+        android:elevation="1dp"/>
+
+    <TextView
+        android:id="@+id/tv_suspected"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dataviewHeight"
+        android:layout_weight="2"
+        android:background="@color/dataview_suspected"
+        android:text="疑似数"
+        android:textColor="@color/datatext_suspected"
+        android:gravity="center"
+        android:textSize="@dimen/textSize"
+        android:elevation="1dp"/>
+
+    <TextView
+        android:id="@+id/tv_cured"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dataviewHeight"
+        android:layout_weight="2"
+        android:background="@color/dataview_cured"
+        android:text="治愈数"
+        android:textColor="@color/datatext_cured"
+        android:gravity="center"
+        android:textSize="@dimen/textSize"
+        android:elevation="1dp"/>
+
+    <TextView
+        android:id="@+id/tv_dead"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dataviewHeight"
+        android:layout_weight="2"
+        android:background="@color/dataview_dead"
+        android:text="死亡数"
+        android:textColor="@color/datatext_dead"
+        android:gravity="center"
+        android:textSize="@dimen/textSize"
+        android:elevation="1dp"/>
+
+</LinearLayout>

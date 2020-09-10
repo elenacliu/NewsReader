@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+    android:layout_marginRight="@dimen/newsDetailMarginSize">
+
+<!--    默认状态下是都不显示的-->
+    <include layout="@layout/entity_item_third_descrip"
+        android:id="@+id/entity_item_third_descrip"
+        android:visibility="gone"/>
+
+    <include layout="@layout/entity_item_third_relation"
+        android:id="@+id/entity_item_third_relation"
+        android:visibility="gone"/>
+
+    <include layout="@layout/entity_item_third_property"
+        android:id="@+id/entity_item_third_property"
+        android:visibility="gone"/>
+
+</FrameLayout>

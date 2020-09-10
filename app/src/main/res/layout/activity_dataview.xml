@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DataviewActivity">
+
+        <include layout="@layout/toolbar_layout"
+            android:id="@+id/toolbar_dataview"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/newsDetailMarginSize"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginBottom="@dimen/newsDetailMarginSize">
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="28dp"
+                        android:background="@color/colorPrimary"/>
+                    <TextView
+                        android:id="@+id/tv_dataview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="确诊国家Top5"
+                        android:textSize="@dimen/titleSize"
+                        android:layout_marginLeft="@dimen/marginSize"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/chart_international"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/barchartHeight" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/newsDetailMarginSize"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginBottom="@dimen/newsDetailMarginSize">
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="28dp"
+                        android:background="@color/colorPrimary"/>
+
+                    <TextView
+                        android:id="@+id/tv_dataview2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="国内疫情数据"
+                        android:layout_marginLeft="@dimen/marginSize"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/titleSize"
+                         />
+                </LinearLayout>
+
+                <include layout="@layout/header_item"
+                    android:id="@+id/header"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_dataview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/newsDetailMarginSize"
+                    android:layout_marginBottom="@dimen/newsDetailMarginSize" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewsDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/news_detail_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/newsDetailMarginSize"
+            android:layout_marginLeft="@dimen/newsDetailMarginSize"
+            android:layout_marginRight="@dimen/newsDetailMarginSize"
+            android:textSize="@dimen/titleSize" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/news_detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDetailMarginSize"
+                android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                android:layout_marginRight="@dimen/newsDetailMarginSize"
+                android:textSize="@dimen/subtextSize"
+                />
+            <TextView
+                android:id="@+id/news_detail_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDetailMarginSize"
+                android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                android:layout_marginRight="@dimen/newsDetailMarginSize"
+                android:textSize="@dimen/subtextSize" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/news_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDetailMarginSize"
+                android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                android:layout_marginRight="@dimen/newsDetailMarginSize"
+                android:textSize="@dimen/textSize" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/bottomMarginSize"
+            android:layout_marginBottom="@dimen/bottomMarginSize">
+
+            <TextView
+                android:id="@+id/fixed_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/bottomMarginSize"
+                android:text="分享本页至："
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/textSize" />
+
+            <ImageButton
+                android:id="@+id/share_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:onClick="onShareWechatClick"
+                android:layout_marginLeft="@dimen/marginSize"
+                android:contentDescription="wechat"
+                android:src="@drawable/ic_wechat"
+                 />
+
+            <ImageButton
+                android:id="@+id/share_weibo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/bottomMarginSize"
+                android:background="#00000000"
+                android:onClick="onShareWeiboClick"
+                android:src="@drawable/ic_weibo"
+                android:contentDescription="weibo" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

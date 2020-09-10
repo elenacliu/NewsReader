@@ -3,7 +3,7 @@
     <color name="colorPrimary">#0084ff</color>
     <color name="colorPrimaryDark">#0047ab</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="textColorPrimary">#fff</color>
+    <color name="textColorPrimary">#D3D3D3</color>
 
 
     <!-- OVERWRITE THESE COLORS FOR A LIGHT THEME -->
@@ -19,4 +19,30 @@
     <color name="material_drawer_selected">#E8E8E8</color>
     <color name="material_drawer_selected_text">#2196F3</color>
     <color name="material_drawer_header_selection_text">#FFF</color>
+
+    <color name="news_item_unViewed">#ff000000</color>
+    <color name="news_item_isViewed">#908e93</color>
+    <color name="news_item_nViewed">#DE000000</color>
+    <color name="card_view_bg">#FF86ccfc</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="smart_refresh_bg">#ffffff</color>
+
+    <color name="dataview_region">#338B6969</color>
+    <color name="datatext_region">#8B6969</color>
+    <color name="dataview_confirmed">#33FF4500</color>
+    <color name="datatext_confirmed">#FF4500</color>
+    <color name="dataview_suspected">#339400D3</color>
+    <color name="datatext_suspected">#9400D3</color>
+    <color name="dataview_cured">#3332CD32</color>
+    <color name="datatext_cured">#32CD32</color>
+    <color name="dataview_dead">#334169E1</color>
+    <color name="datatext_dead">#4169E1</color>
+
+    <color name="color_h">#BCC8AE</color>
+    <color name="color_a">#C7BDA1</color>
+    <color name="color_s">#98BEC7</color>
+    <color name="color_c">#ADBBDC</color>
+    <color name="color_p">#A7C1BF</color>
+
 </resources>

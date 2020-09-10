@@ -22,11 +22,8 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment {
 
     protected Context context;
-    protected boolean isVisible;
     private View rootView;
     Unbinder unbinder;
-
-//    Todo: Fragment懒加载，性能提升
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -52,12 +49,13 @@ public abstract class BaseFragment extends Fragment {
         if(rootView == null)  {
             rootView = inflater.inflate(inflateLayoutId(), container, false);
             unbinder = ButterKnife.bind(this, rootView);
-            initView();
+            initView(rootView);
         }
         Log.e("onCreateView", "onCreateView");
         return rootView;
     }
 
+    // 当恢复fragment时需要调用此代码
     @Override
     public void onResume() {
         super.onResume();
@@ -72,7 +70,7 @@ public abstract class BaseFragment extends Fragment {
             unbinder.unbind();
     }
 
-    protected void initView() {
+    protected void initView(View rootView) {
 
     }
     protected void prepare() {

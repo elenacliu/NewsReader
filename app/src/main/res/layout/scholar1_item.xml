@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+    android:layout_marginRight="@dimen/newsDetailMarginSize"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:elevation="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marginSize"
+        android:layout_marginRight="@dimen/marginSize"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/scholar1_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/newsDetailMarginSize"
+                android:layout_gravity="center"
+                android:contentDescription="学者图片"
+                android:adjustViewBounds="true"
+                android:src="@drawable/avatar" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/scholar1_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginTop="@dimen/marginSize"
+                    android:text="学者姓名"
+                    android:textSize="@dimen/labelSize"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:id="@+id/linearlayout_index1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginTop="@dimen/marginSize">
+
+                    <include layout="@layout/index_item_h"
+                        android:id="@+id/index_h" />
+
+                    <View
+                        android:id="@+id/placeholder"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"/>
+
+                    <include layout="@layout/index_item_a"
+                        android:id="@+id/index_a" />
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"/>
+
+                    <include layout="@layout/index_item_s"
+                        android:id="@+id/index_s" />
+
+                    <View
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"/>
+
+                    <include layout="@layout/index_item_p"
+                        android:id="@+id/index_p" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_layout_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/marginSize"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize">
+
+
+                    <include layout="@layout/index_item_c"
+                        android:id="@+id/index_c" />
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginTop="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_briefcase"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/tv_position"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="positionpositionpositionpositionpositionpositionpositionposition"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/newsDetailMarginSize"
+                    android:layout_marginRight="@dimen/newsDetailMarginSize"
+                    android:layout_marginTop="@dimen/newsDetailMarginSize"
+                    android:layout_marginBottom="@dimen/newsDetailMarginSize">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_institution"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:id="@+id/tv_affiliation"
+                        android:layout_marginLeft="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="affiliationaffiliationaffiliationaffiliationaffiliationaffiliationaffiliationaffiliationaffiliation"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+

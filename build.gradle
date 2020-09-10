@@ -4,6 +4,7 @@ buildscript {
         mavenCentral()
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.0.1"
@@ -23,4 +24,10 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+ext {
+    roomVersion = '2.2.1'
+    archLifecycleVersion = '2.2.0'
+    coreTestingVersion = '2.1.0'
+    materialVersion = '1.0.0'
 }

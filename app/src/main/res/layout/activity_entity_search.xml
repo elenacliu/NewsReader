@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EntitySearchActivity">
+
+    <include
+        android:id="@+id/toolbar_entity"
+        layout="@layout/toolbar_layout" />
+
+
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view_entity"
+        android:layout_below="@+id/toolbar_entity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:iconifiedByDefault="false"
+        app:queryHint="点击搜索实体信息"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_view_entity">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/linear_layout_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/newsDetailMarginSize"
+                    android:layout_below="@+id/container">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="融合，开源的知识图谱"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/titleSize"
+                        android:layout_marginLeft="@dimen/marginSize"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/newsDetailMarginSize">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5"
+                            android:layout_marginLeft="@dimen/marginSize"
+                            android:layout_marginRight="@dimen/marginSize"
+                            android:text="@string/search_entity_descrip"/>
+<!--                        TODO: add another imageview?-->
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

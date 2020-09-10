@@ -1,8 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="marginSize">16dp</dimen>
+    <dimen name="shortMarginSize">5dp</dimen>
     <dimen name="textSize">16sp</dimen>
+    <dimen name="labelSize">24sp</dimen>
+    <dimen name="indexSize">12sp</dimen>
+
+    <dimen name="dataTextSize">16sp</dimen>
+    <dimen name="dataRegionSize">14sp</dimen>
+    <dimen name="subtextSize">12sp</dimen>
     <dimen name="titleSize">28sp</dimen>
     <dimen name="avatarSize">80dp</dimen>
     <dimen name="radius">5dp</dimen>
+    <dimen name="cardHeight">180dp</dimen>
+    <dimen name="newsListTitleSize">15sp</dimen>
+    <dimen name="newsListContentSize">12sp</dimen>
+    <dimen name="newsListTimeSize">10sp</dimen>
+
+    <dimen name="newsListMarginSize">5dp</dimen>
+    <dimen name="newsTitleMarginSize">10dp</dimen>
+    <dimen name="newsDetailMarginSize">18dp</dimen>
+    <dimen name="bottomMarginSize">40dp</dimen>
+    <dimen name="barchartHeight">350dp</dimen>
+
+    <dimen name="dataviewHeight">30dp</dimen>
+    <dimen name="dataviewPadding">4dp</dimen>
+
+    <dimen name="entityFirstHeight">50dp</dimen>
+    <dimen name="entitySecondHeight">28dp</dimen>
 </resources>
