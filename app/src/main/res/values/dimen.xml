@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="marginSize">16dp</dimen>
+    <dimen name="shortMarginSize">5dp</dimen>
     <dimen name="textSize">16sp</dimen>
     <dimen name="labelSize">24sp</dimen>
     <dimen name="indexSize">12sp</dimen>
@@ -24,4 +25,7 @@
 
     <dimen name="dataviewHeight">30dp</dimen>
     <dimen name="dataviewPadding">4dp</dimen>
+
+    <dimen name="entityFirstHeight">50dp</dimen>
+    <dimen name="entitySecondHeight">28dp</dimen>
 </resources>

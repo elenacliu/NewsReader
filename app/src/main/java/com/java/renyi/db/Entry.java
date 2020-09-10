@@ -34,6 +34,10 @@ public class Entry implements Serializable {
     public String cluster;
     public Entry(String _id) { this._id = _id;}
 
+    public String getUrls() {
+        return urls;
+    }
+
     public Entry(String type, JSONObject json, boolean getClusterImmediate) {
         _id = json.getString("_id");
         title = json.getString("title");

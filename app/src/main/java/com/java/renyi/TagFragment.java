@@ -80,7 +80,7 @@ public class TagFragment extends BaseFragment {
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
-                    if (entry.content == null) {
+                    if (entry.content == null || entry.content.equals("")) {
                         iterator.remove();
                     }
                 }
@@ -94,7 +94,7 @@ public class TagFragment extends BaseFragment {
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
-                    if (entry.content == null) {
+                    if (entry.content == null || entry.content.equals("")) {
                         iterator.remove();
                     }
                 }
@@ -103,8 +103,6 @@ public class TagFragment extends BaseFragment {
             mEntryViewModel.getCurrentNewsEntrys().observe(this, nowNewsEntryObserver);
         }
         else if (currentTag.equals("cluster")) {
-
-
             mEntryViewModel.getGlobalCluster().observe(this, entries -> {
                 Log.e("globalCluster ", entries.size()+"");
             });
@@ -115,7 +113,7 @@ public class TagFragment extends BaseFragment {
                 Iterator<Entry> iterator = entries.iterator();
                 while (iterator.hasNext()) {
                     Entry entry = iterator.next();
-                    if (entry.content == null) {
+                    if (entry.content == null || entry.content.equals("")) {
                         iterator.remove();
                     }
                 }
@@ -189,6 +187,9 @@ public class TagFragment extends BaseFragment {
         }
     }
 
+    /**
+     * TODO: load more?
+     */
     public void onResume() {
         super.onResume();
         Log.e("onResume", currentTag +" onResume");

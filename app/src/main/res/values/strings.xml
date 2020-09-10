@@ -7,6 +7,7 @@
     <string name="login">登录</string>
     <string name="exit">退出登录</string>
     <string name="register">注册</string>
+    <string name="weixin_id">wxf8948c9080cebb06</string>
 
     <string name="search_entity_descrip">为了对抗新型冠状病毒（COVID-19）,全世界的科研人员、医疗人员、政府工作人员和公众渴望获得开放、全面的新冠知识。我们收集整理了现有COVID-19开放知识图谱，并进一步融合了它们，构建了一个大规模、结构化新冠知识图谱(COKG-19)。目前，COKG-19包含了505个概念、393个属性、26282个实例和32352个知识三元组，覆盖了医疗、健康、物资、防控、科研和人物等。此外，COKG-19是一个中英文双语知识图谱。
 
