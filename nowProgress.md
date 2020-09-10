@@ -10,12 +10,19 @@
 
    
 
-6. java.lang.IllegalStateException: Bindings already cleared.
+4. java.lang.IllegalStateException: Bindings already cleared.
 
-7. 后端去掉toast
 
-6. 夜间模式与开关匹配
 
-7. 加入Welcome Activity？
+1. 后端去掉toast
+2. 夜间模式与开关匹配——Toast弹窗，疫情数据
+3. 加入Welcome Activity？(尝试)
+4. 转圈时间太长?
+5. 退出再进入，标签页重置了
+6. 标签名统一(新闻速览，专业论文)
 
-8. 转圈时间太长?
+7. 去掉微博分享标志
+
+8. 关于里面添加开发者信息
+9. 知疫学者信息不对(各个指数)
+

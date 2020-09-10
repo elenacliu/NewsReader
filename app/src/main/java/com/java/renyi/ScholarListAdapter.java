@@ -78,7 +78,7 @@ public class ScholarListAdapter extends RecyclerView.Adapter<ScholarListAdapter.
         // H-index
         holder.tvH.setText(Integer.toString(scholar.getHindex()));
         // newStar
-        Float fA = scholar.getNewStar();
+        Float fA = scholar.getActivity();
         if (fA >= 1) {
             holder.tvA.setText(decimalFormat.format(fA));
         }
@@ -86,7 +86,7 @@ public class ScholarListAdapter extends RecyclerView.Adapter<ScholarListAdapter.
             holder.tvA.setText("0"+decimalFormat.format(fA));
         }
         // sociability
-        Float fS = scholar.getSociability();
+        Float fS = scholar.getNewStar();
         if (fS >= 1) {
             holder.tvS.setText(decimalFormat.format(fS));
         }
