@@ -194,6 +194,8 @@ class EntryRepository {
             }
         });
 //        mAllEntrys = mEntryDao.getAlphabetizedEntrys();
+
+
     }
 
 
@@ -271,6 +273,7 @@ class EntryRepository {
                 globalStatus.postValue(askGlobalStatus());
             }
             else {
+                Log.e("in repoaskGlobal", "no net");
                 Looper.prepare();
                 Toast.makeText(app,"You Do Not Have Network When Getting Global Pandemic Info", Toast.LENGTH_SHORT).show();
                 Looper.loop();
