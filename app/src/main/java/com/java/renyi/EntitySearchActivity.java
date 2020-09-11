@@ -61,11 +61,11 @@ public class EntitySearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (query == null) {
+                if (query == null || query.equals("")) {
                     Toast.makeText(EntitySearchActivity.this, "请输入搜索内容", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(EntitySearchActivity.this, query, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EntitySearchActivity.this, "正在搜索\""+query+"\"", Toast.LENGTH_SHORT).show();
                     mEntryViewModel.searchEntity(query);
                 }
                 return true;

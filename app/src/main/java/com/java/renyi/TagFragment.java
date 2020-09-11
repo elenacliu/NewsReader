@@ -208,10 +208,10 @@ public class TagFragment extends BaseFragment {
                 @Override
                 public void onRefresh(RefreshLayout refreshlayout) {
                     if (!NetworkUtil.isNetworkAvailable(getActivity())) {
-                        Toast.makeText(getActivity(), "offline",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "离线状态无法刷新",Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        Toast.makeText(getActivity(), "online", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "online", Toast.LENGTH_SHORT).show();
                         if (currentTag.equals("paper")) {
                             mEntryViewModel.refresh("paper");
                         }

@@ -159,12 +159,13 @@ public class MainActivity extends AppCompatActivity {
                             setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 //                        Toast.makeText(MainActivity.this, "设置夜间模式需要重启软件", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                        // 小bug: 需要携带本页面的数据，比如tags & delTags
-                        // 用户数据等等
-//                        intent.putExtra("tags", tags);
-//                        intent.putExtra("delTags", delTags);
+//                        // 小bug: 需要携带本页面的数据，比如tags & delTags
+//                        // 用户数据等等
+////                        intent.putExtra("tags", tags);
+////                        intent.putExtra("delTags", delTags);
                         startActivity(intent);
                         finish();
+//                        recreate();
                     }
                 });
         if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
@@ -239,7 +240,6 @@ public class MainActivity extends AppCompatActivity {
                 })
         .build();
     }
-
 
     private void bindData() {
         setTagList();
